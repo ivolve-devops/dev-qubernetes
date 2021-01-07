@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: marketplace-be
+  name: marketplace-be
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: marketplace-be
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: marketplace-be
+        name: marketplace-be
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/marketplace-be:0.5
+        name: marketplace-be
+        ports:
+        - containerPort: 9100
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_LINK
+          value: mongodb://mongodb-ip:27017/ms-marketplace-be
+        - name: PORT
+          value: "9100"
+        - name: IAM
+          value: "iam:8003"
+        - name: MIDDLEWARE
+          value: "http://qa-middleware.ivolve.io:31907"
+        - name: MS_EMAILER_URL
+          value: http://emailer:8009
+        - name: KILL_BILL
+          value: http://kill-bill-ip:8080
+        - name: API_KEY_PRODUCT
+          value: L)~G8dm:t_h7h6y<
+        - name: API_SECRET_PRODUCT
+          value: L)~G8dm:t_h7h6y<
+        - name: API_KEY_INFRASTRUCTURE
+          value: X5#Y5UVm9`p$Vj^P
+        - name: API_SECRET_INFRASTRUCTURE
+          value:  X5#Y5UVm9`p$Vj^P
+        - name: KILLBILL_USER
+          value: admin
+        - name: KILLBILL_PASS
+          value: password
+        - name: OTP_SECRET
+          value: Ahm3d!sWeaRingGr33n$h!rt
+        - name: ADMIN_USERNAME
+          value: sahal
+        - name: ADMIN_PASSWORD
+          value: ktbffh10
+        - name: STATIC_IV
+          value: c82ff58017e7dd2d4c82612ae4d43168  
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ntopng-client
+  name: ntopng-client
+spec:
+  ports:
+  - name: "8669"
+    port: 8669
+    targetPort: 8669
+  selector:
+    name: ntopng-client

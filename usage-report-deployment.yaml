@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: usage-report
+  name: usage-report
+spec:
+  replicas: 2
+  selector:
+      matchLabels:
+          name: usage-report
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: usage-report
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/usage-report:1
+        name: usage-report
+        ports:
+        - containerPort: 8006
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PORT
+          value: "8006"
+        - name: DB_LINK
+          value: mongodb://mongodb-ip:27017
+        - name: OPENSTACK_URL
+          value: http://openstack-ip
+        - name: KEYSTONE_PORT_VERSION
+          value: 5000/v3
+        - name: VOLUME_PORT_VERSION
+          value: 8776/v3
+        - name: USERNAME
+          value: sahal
+        - name: PASSWORD
+          value: ktbffh10
+        - name: USER_PROJECT
+          value: 5ad86ff5ec9d469ab2910103d6f9edd2
+          #ms-logger serice
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: usage-report
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: usage-report
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8006"
+        - name: LOG_TARGET
+          value: both
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

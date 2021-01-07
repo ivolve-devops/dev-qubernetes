@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webclient
+  name: webclient
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: webclient
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: webclient
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/webclient:0.5
+        name: webclient
+        ports:
+        - containerPort: 80
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: IP_ADDR
+          value: "webclient-ip"
+        - name: BEFFE
+          value: BEFFE
+        - name: ORCH
+          value: http://python-app:8002
+        - name: IAM
+          value: http://iam:8003
+        - name: API_GATEWAY
+          value: http://app.ivolve.io:30627
+        - name: EMAILER
+          value: http://emailer:8009
+        - name: DEVELOPMENT_ENV
+          value: "true"
+        - name: MONITORING_SOCKET_IP
+          value: http://app.ivolve-monitoring.io:30627
+        - name: MS_HYSTAX_IP
+          value: http://hystax:8015
+         
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

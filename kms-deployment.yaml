@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kms
+  name: kms
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: kms
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: kms
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/kms:1
+        name: kms
+        ports:
+        - containerPort: 8010
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PORT
+          value: "8010"
+        - name: BARBICAN_VESRION
+          value: v1
+        - name: BARBICAN_ENDPOINT
+          value:  http://barbican-ip:9311
+          #ms-logger serice
+        - name: MS_LOGGER_IP
+          value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: kms
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: kms
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8010"
+        - name: LOG_TARGET
+          value: both
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1
+
+

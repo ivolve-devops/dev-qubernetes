@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: iam
+  name: iam
+spec:
+  ports:
+  - name: "8003"
+    port: 8003
+    targetPort: 8003
+  selector:
+    name: iam
+

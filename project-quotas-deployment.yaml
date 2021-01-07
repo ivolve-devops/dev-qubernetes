@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: iam
+  name: project-quotas
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: project-quotas
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: project-quotas
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/project-quotas:0.5
+        name: project-quotas
+        ports:
+        - containerPort: 8018
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: MONGODB_URI
+          value: "mongodb://mongodb-ip:27017/ms-project-quotas"
+        - name: PORT
+          value: "8018"
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

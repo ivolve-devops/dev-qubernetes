@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: qa.ivolve.io
+    http:
+      paths:
+      - backend:
+            serviceName: webclient
+            servicePort: 80
+  - host: qa-middleware.ivolve.io
+    http:
+      paths:
+      - backend:
+             serviceName: middleware
+             servicePort: 8001
+  - host: qa-monitoring.ivolve.io
+    http:
+      paths:
+      - backend:
+             serviceName: monitoring
+             servicePort: 8800
+  - host: qa-marketplace-be.ivolve.io       
+    http:                                   
+      paths:                                
+      - backend:                            
+             serviceName: marketplace-be 
+             servicePort: 9100
+  - host: qa-marketplace-fe.ivolve.io 
+    http:                             
+      paths:                           
+      - backend:       
+             serviceName: marketplace-fe 
+             servicePort: 80

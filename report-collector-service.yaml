@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: report-collector
+  name: report-collector
+spec:
+  ports:
+  - name: "8099"
+    port: 8099
+    targetPort: 8099
+  selector:
+    name: report-collector

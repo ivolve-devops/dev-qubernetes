@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: keycloak
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: keycloak
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              
+        name: keycloak
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/keycloak:0.5
+        name: keycloak
+        ports:
+        - containerPort: 8030
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: SERVER_URL
+          value: "http://master-ip:8080/auth/"
+        - name: DEFAULT_REALM_NAME
+          value: DCM_REALM
+        - name: CLIENT_ID
+          value: PTCL
+        - name: CLIENT_SECRET_KEY
+          value: 7137fc1f-23f3-4f35-88dc-73d944589568
+        - name: ADMIN_USERNAME
+          value: admin
+        - name: ADMIN_PASSWORD
+          value: admin
+        - name: ADMIN_INITIAL_REALM
+          value: master
+               
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1
+
+
+

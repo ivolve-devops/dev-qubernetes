@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: trial-account
+  name: trial-account
+spec:
+  ports:
+  - name: "8020"
+    port: 8020
+    targetPort: 8020
+  selector:
+    name: trial-account

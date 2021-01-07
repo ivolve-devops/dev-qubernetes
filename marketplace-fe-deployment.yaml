@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: marketplace-fe
+  name: marketplace-fe
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: marketplace-fe
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: marketplace-fe
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/marketplace-fe:2
+        name: marketplace-fe
+        ports:
+        - containerPort: 80
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: GATSBY_PROTOCOL
+          value: http
+        - name: GATSBY_BASE_URL
+          value: marketplace-be:9100
+        - name: GATSBY_DCM_URL
+          value: qa.ivolve.io:31907         
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

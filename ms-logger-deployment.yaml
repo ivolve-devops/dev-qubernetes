@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ms-logger
+  name: ms-logger
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: ms-logger
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: ms-logger
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/logger:1
+        name: ms-logger
+        ports:
+        - containerPort: 8011
+        imagePullPolicy: IfNotPresent
+        env:
+        #- name: MS_LOGGER_IP
+         # value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B89F3B83ADCAD56
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: ms-logger
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: ms-logger
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8012"
+        - name: LOG_TARGET
+          value: both
+        - name: LOGSTASH_IP
+          value: "logstash-ip"
+        - name: LOGSTASH_PORT
+          value: "5000"
+        - name: SECRET_KEY
+          value: BC2B36B89F3B83ADCAD56
+  
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

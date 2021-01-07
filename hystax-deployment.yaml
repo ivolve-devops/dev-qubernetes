@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hystax
+  name: hystax
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+         name: hystax
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: hystax
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/middleware:0.5
+        name: hystax
+        ports:
+        - containerPort: 8015
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: PORT
+          value: "8015"
+        - name: PROTOCOL
+          value: http
+        - name: HYSTAX_IP
+          value: hystax-ip 
+        - name: HYSTAX_EMAIL
+          value: sahal.ilyas@ivolve.io
+        - name: HYSTAX_PASSWORD
+          value: 624a32b16cee388905c77eca779d0e82
+        - name: MS_CUSTOMER_INTEGRATION
+          value: customer-integration:8020
+        - name: PRICING
+          value: http://ms-settings:8005
+        - name: MS_TRIALACCOUNT_URL
+          value: http://trial-account:8020/trialAccount
+        - name: MS_LOGGER_IP
+          value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: middleware
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: middleware
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8001"
+        - name: LOG_TARGET
+          value: both
+       
+         
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

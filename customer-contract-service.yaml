@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: customer-contract
+  name: customer-contract
+spec:
+  ports:
+  - name: "8024"
+    port: 8024
+    targetPort: 8024
+  selector:
+    name: customer-contract

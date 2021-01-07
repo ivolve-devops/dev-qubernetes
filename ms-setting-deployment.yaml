@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ms-settings
+  name: ms-settings
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: ms-settings
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: ms-settings
+    spec:
+      containers:
+      - image: 10.81.1.68:5000/ms-settings:0.5
+        name: ms-settings
+        ports:
+        - containerPort: 8005
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: PORT
+          value: "8005"
+        - name: MONGODB_URI
+          value: mongodb://mongodb-ip:27017/ms-settings
+        - name: OpenstackRoutes
+          value: http://openstack-ip:5000/v3
+        #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

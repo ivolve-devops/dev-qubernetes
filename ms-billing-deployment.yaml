@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ms-billing
+  name: ms-billing
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: ms-billing
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: ms-billing
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/ms-billing:1
+        name: ms-billing
+        ports:
+        - containerPort: 8020
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PORT
+          value: "8022"
+        - name: NODE_ENV
+          value: development
+        - name: BILLING_URL
+          value: mongodb://billing-ip:27017/ms-billing
+        - name: KILLBILL_ENDPOINT
+          value: http://killbill-endpoint-ip:8080
+        - name: KILLBILL_ADMIN_CREDENTIAL
+          value: YWRtaW46cGFzc3dvcmQ=
+        - name: KILLBILL_API_SECRET
+          value: andrews
+        - name: KILLBILL_GLOBAL_KEY
+          value: global_APIKEY
+        - name: MS_LOGGER_IP
+          value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: ms-billing
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: ms-billing
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8020"
+        - name: LOG_TARGET
+          value: both
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

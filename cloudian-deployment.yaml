@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: cloudian
+  name: cloudian
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+         name: cloudian
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: cloudian
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/cloudian:0.5
+        name: cloudian
+        ports:
+        - containerPort: 8002
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: CLOUDIAN
+          value: https://cloudian-ip:19443
+          
+          #ms-logger serice
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: cloudian
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: cloudian
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8002"
+        - name: MS_LOGGER_IP
+          value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+        - name: LOG_TARGET
+          value: both
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+        maxUnavailable: 0
+        maxSurge: 1

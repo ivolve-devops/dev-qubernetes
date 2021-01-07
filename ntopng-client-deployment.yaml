@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ntopng-client
+  name: ntopng-client
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: ntopng-client
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: iam
+        name: ntopng-client
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/ntopng-client:0.5
+        name: ntopng-client
+        ports:
+        - containerPort: 8669
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: NOVA_URL
+          value: "http://nova-ip"
+        - name: NOVA_PORT
+          value: "8774"
+        - name: PORT
+          value: "8669" 
+        - name: NTOPNG_BASE_URL
+          value: "http://ntopng-ip:3000" 
+        - name: NTOPNG_USERNAME
+          value: "admin"
+        - name: NTOPNG_PASSWORD
+          value: "letmein"
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

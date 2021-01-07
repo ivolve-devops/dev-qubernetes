@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: report-collector
+  name: report-collector
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: report-collector
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+         name: report-collector
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/report-collector:96
+        name: report-collector
+        ports:
+        - containerPort: 8099
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: RABBITMQ_HOST
+          value: "rabbitmq-ip"
+        - name: PORT
+          value: "8099"
+        - name: RABBITMQ_USER
+          value: guest
+        - name: RABBITMQ_PASSWORD
+          value: 938Zm9No15LH4iv9Pw46EWHG3
+        - name: NOTIFICATION_RECEIVER_IP
+          value: usage-report:8006
+        - name: EXCHANGE_NAME
+          value: all
+          #ms-logger serice
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: report-collector
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: report-collector
+        - name: MS_LOGGER_IP
+          value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+        - name: LOG_TARGET
+          value: both
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

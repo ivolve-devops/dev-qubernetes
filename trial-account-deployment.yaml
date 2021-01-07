@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: trial-account
+  name: trial-account
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          name: trial-account
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+              #io.kompose.service: trial-account
+        name: trial-account
+    spec:
+      containers:
+      - image: 10.81.1.68:5000/trial-account:1
+        name: trial-account
+        ports:
+        - containerPort: 8020
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: ALLOWED_ORIGIN_IP
+          value: "master-ip"
+        - name: OPENSTACK_KEYSTONE_URL
+          value: "http://openstack-keystone-ip:5000"
+        - name: PORT
+          value: "8020"
+      #ms-logger serice
+        - name: MONGODB_BASE_URL
+          value: mongodb://mongodb-ip:27017/ms-trialAccount
+        - name: SENDER_USERNAME
+          value: "testingmailivolve@yahoo.com"
+        - name: SENDER_PASSWORD
+          value: password
+        - name: HOST
+          value: "smtp.mail.yahoo.com"
+        - name: SCHEDULING_MAIL
+          value: "0 */12 * * *"
+        - name: ORCHESTRATOR
+          value: http://python-app:8002
+        - name: ADMINUSERNAME
+          value: 18da298826a91410c572211cd2e83d9c
+        - name: ADMINUSERPASSWORD
+          value: 1d016ec856d1e120646fc7847f62ba29
+        - name: ADMINUSERPROJECT
+          value: 129ff8be551a0bb1ba06583d3b6bcca9f9fe791ded17f8f1116b8ccdea9627045c2b5965b562e7b8080afb93d2c69368
+          
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1

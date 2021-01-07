@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: cloudian
+  name: cloudian
+spec:
+  ports:
+  - name: "8021"
+    port: 8021
+    targetPort: 8021
+  selector:
+    name: cloudian

@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: middleware
+  name: middleware
+spec:
+  replicas: 2
+  selector:
+      matchLabels:
+         name: middleware
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: middleware
+    spec:
+      containers:
+      - image: 10.81.1.50:5000/middleware:0.5
+        name: middleware
+        ports:
+        - containerPort: 8001
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: IAM
+          value: http://iam:8003
+        - name: ORCHESTRATOR
+          value: http://python-app:8002
+        - name: USAGE_REPORT
+          value: http://usage-report:8006
+        - name: EMAILER_BASEURL
+          value: http://emailer:8009
+        - name: TENANT_QUOTA_BASEURL
+          value: http://project-quotas:8018/tenant/quotas
+        - name: HYSTAX_BASEURL
+          value: http://hystax:8015
+        - name: CUSTOMER_INTEGRATION_BASEURL
+          value: 	http://customer-integration:8020
+        - name: EGRESS_REPORTING_URL
+          value: http://ntopng-client:8669/egressReporting/
+        - name: PORT
+          value: "8001"
+        - name: KMS_BASEURL
+          value: http://kms:8010
+        - name: RESERVE_ECS
+          value: http://reserved-ecs:8011
+        - name: MS_LOGGER_IP
+          value: ms-logger
+        - name: MS_LOGGER_PORT
+          value: "8012"
+        - name: MS_LOGGER_SECRET_KEY
+          value: BC2B36B81AB89F3B83AD227DCAD56
+        - name: MS_LOGGER_THIS_SERVICE_NAME
+          value: middleware
+        - name: MS_LOGGER_THIS_SERVICE_IP
+          value: middleware
+        - name: MS_LOGGER_THIS_SERVICE_PORT
+          value: "8001"
+        - name: LOG_TARGET
+          value: both
+        - name: MS_SETTINGS
+          value: http://ms-settings:8005
+        - name: MS_TRIALACCOUNT_URL
+          value: http://trial-account:8020/trialAccount
+        - name: BILLING_URL
+          value: http://ms-billing:8022
+        - name: MS_CUSTOMER_CONTRACTS
+          value: http://customer-contract:8024
+        - name: CLOUDIAN_BASEURL
+          value: http://cloudian:8021
+        - name: KEYCLOAK_BASEURL
+          value: http://keycloak:8030/keycloak
+        - name: MS_MARKETPLACE_BE
+          value: http://marketplace-be:9100
+
+
+         
+      #restartPolicy: Always
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+       maxUnavailable: 0
+       maxSurge: 1
+
