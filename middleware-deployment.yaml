@@ -41,7 +41,7 @@ spec:
         - name: HYSTAX_BASEURL
           value: http://hystax:8015
         - name: CUSTOMER_INTEGRATION_BASEURL
-          value: 	http://customer-integration:8020
+          value: 	http://customer-integration:8023
         - name: EGRESS_REPORTING_URL
           value: http://ntopng-client:8669/egressReporting/
         - name: PORT
@@ -78,6 +78,16 @@ spec:
           value: http://keycloak:8030/keycloak
         - name: MS_MARKETPLACE_BE
           value: http://marketplace-be:9100
+        - name: HANA_BASEURL
+          value: http://10.81.1.37:8029
+        - name: SALESFORCE_BASEURL
+          value: http://10.81.1.37:8026
+        - name: MS_MIDDLEWARE
+          value: http://10.81.1.37:8001
+        - name: DBVM_BASEURL
+          value: http://10.81.1.37:8029
+        - name: DCMTOSAP_BASEURL 
+          value: http://10.81.1.37:8031
 
 
          

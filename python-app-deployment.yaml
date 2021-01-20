@@ -44,7 +44,12 @@ spec:
           value: http://middleware:8001/api/v1/
         - name: KEY_STONE_PORT
           value: "5000"
-
+        - name: ADMIN_ROLE_ID
+          value: 3819ab406b984958920b74991a81abe0
+        - name:  UAT_CONSOLE_URL
+          value: https://jed-console.detasad.com.sa/ 
+        - name: MS_TRIALACCOUNT_URL
+          value: 'http://10.81.1.102:9000/trialAccount/
           #ms-logger serice
         - name: MS_LOGGER_THIS_SERVICE_NAME
           value: python-app

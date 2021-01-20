@@ -48,7 +48,7 @@ spec:
         - name: MONASCA_NETWORK_UP_TIME
           value: 6,minutes
         - name: MONASCA_STORAGE_TIME
-          value: 0,seconds  
+          value: 50,seconds  
     #ms-logger serice
         - name: MS_LOGGER_IP
           value: ms-logger

@@ -28,7 +28,24 @@ spec:
         env:
         - name: CLOUDIAN
           value: https://cloudian-ip:19443
-          
+         - name: ENDPOINT_URL
+           value: http://10.81.1.36:80/
+          - name: USERTYPE
+            value: USERTYPE
+          - name: LDAP
+            value: false 
+          - name: ACTIVE
+            value: true
+          - name: USERNAME
+            value: sysadmin
+          - name: PASSWORD
+            value: public
+          - name: CLIENT_ADMIN
+            value: client_admin
+          - name: USERADMIN
+            value: SystemAdmin
+          - name: GROUPID
+            value: 0          
           #ms-logger serice
         - name: MS_LOGGER_THIS_SERVICE_NAME
           value: cloudian

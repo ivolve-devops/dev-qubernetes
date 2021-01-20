@@ -35,6 +35,12 @@ spec:
           value: "http://openstack-keystone-ip:5000"
         - name: PORT
           value: "8020"
+        - name: LOGGER
+          value: true 
+        - name: DEBUG
+          value: true 
+        - name: ENVIRONMENT_SETUP
+          value: uat      
       #ms-logger serice
         - name: MONGODB_BASE_URL
           value: mongodb://mongodb-ip:27017/ms-trialAccount
@@ -54,6 +60,11 @@ spec:
           value: 1d016ec856d1e120646fc7847f62ba29
         - name: ADMINUSERPROJECT
           value: 129ff8be551a0bb1ba06583d3b6bcca9f9fe791ded17f8f1116b8ccdea9627045c2b5965b562e7b8080afb93d2c69368
+        - name: MIDDLEWARE
+          value: http://middleware:8001 
+        - name: KEYCLOAK_BASEURL
+          value: http://10.81.1.50:32354/keycloak     
+         
           
       #restartPolicy: Always
   strategy:

@@ -30,7 +30,7 @@ spec:
         #- name: MS_LOGGER_IP
          # value: ms-logger
         - name: MS_LOGGER_PORT
-          value: "8012"
+          value: "8008"
         - name: MS_LOGGER_SECRET_KEY
           value: BC2B36B89F3B83ADCAD56
         - name: MS_LOGGER_THIS_SERVICE_NAME

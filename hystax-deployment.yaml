@@ -37,9 +37,9 @@ spec:
         - name: HYSTAX_EMAIL
           value: sahal.ilyas@ivolve.io
         - name: HYSTAX_PASSWORD
-          value: 624a32b16cee388905c77eca779d0e82
+          value: 35e55f616cf716ae80cae4977c6389e9
         - name: MS_CUSTOMER_INTEGRATION
-          value: customer-integration:8020
+          value: customer-integration:8023
         - name: PRICING
           value: http://ms-settings:8005
         - name: MS_TRIALACCOUNT_URL
@@ -58,6 +58,12 @@ spec:
           value: "8001"
         - name: LOG_TARGET
           value: both
+        - name: ADMIN_ROLE_ID
+          value: 49
+        - name: MEMBER_ROLE_ID
+          value: 50
+        - name: ADMIN_ROLE_NAME
+          value: client_admin       
        
          
       #restartPolicy: Always
