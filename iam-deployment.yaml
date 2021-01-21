@@ -55,6 +55,8 @@ spec:
           value: "8003"
         - name: LOG_TARGET
           value: both
+        - name: ENVIROMENT
+          value: development
           
       #restartPolicy: Always
   strategy:
