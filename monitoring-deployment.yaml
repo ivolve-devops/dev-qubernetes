@@ -2,15 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "18"
+    deployment.kubernetes.io/revision: "5"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-    kubernetes.io/change-cause: kubectl set image deployment/iam iam=10.81.1.72:5000/iam:13
+    kubernetes.io/change-cause: kubectl set image deployment/monitoring monitoring=10.81.1.72:5000/monitoring:8
       --record=true
-  creationTimestamp: "2021-01-14T05:57:39Z"
-  generation: 19
+  creationTimestamp: "2021-01-14T05:57:38Z"
+  generation: 5
   labels:
-    io.kompose.service: iam
+    io.kompose.service: monitoring
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -41,21 +41,43 @@ metadata:
               f:name: {}
           f:spec:
             f:containers:
-              k:{"name":"iam"}:
+              k:{"name":"monitoring"}:
                 .: {}
                 f:env:
                   .: {}
-                  k:{"name":"ADMIN_PASSWORD"}:
-                    .: {}
-                    f:name: {}
-                  k:{"name":"ADMIN_USERNAME"}:
-                    .: {}
-                    f:name: {}
-                  k:{"name":"ALLOWED_ORIGIN_IP"}:
+                  k:{"name":"IAM_IP"}:
                     .: {}
                     f:name: {}
                     f:value: {}
                   k:{"name":"LOG_TARGET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MIDDLEWARE_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONASCA_CPU_TIME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONASCA_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONASCA_NETWORK_DOWN_TIME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONASCA_NETWORK_UP_TIME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONASCA_RAM_TIME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONASCA_STORAGE_TIME"}:
                     .: {}
                     f:name: {}
                     f:value: {}
@@ -87,13 +109,11 @@ metadata:
                     .: {}
                     f:name: {}
                     f:value: {}
-                  k:{"name":"OPENSTACK_KEYSTONE_URL"}:
-                    .: {}
-                    f:name: {}
-                  k:{"name":"OPENSTACK_KEYSTONE_URL_JEDDAH"}:
-                    .: {}
-                    f:name: {}
                   k:{"name":"PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PROTOCOL"}:
                     .: {}
                     f:name: {}
                     f:value: {}
@@ -101,7 +121,7 @@ metadata:
                 f:name: {}
                 f:ports:
                   .: {}
-                  k:{"containerPort":8003,"protocol":"TCP"}:
+                  k:{"containerPort":8800,"protocol":"TCP"}:
                     .: {}
                     f:containerPort: {}
                     f:protocol: {}
@@ -115,7 +135,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl-create
     operation: Update
-    time: "2021-01-14T05:57:39Z"
+    time: "2021-01-14T05:57:38Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -126,35 +146,11 @@ metadata:
         f:template:
           f:spec:
             f:containers:
-              k:{"name":"iam"}:
+              k:{"name":"monitoring"}:
                 f:image: {}
     manager: kubectl-set
     operation: Update
-    time: "2021-01-14T06:17:00Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:spec:
-        f:template:
-          f:spec:
-            f:containers:
-              k:{"name":"iam"}:
-                f:env:
-                  k:{"name":"ADMIN_PASSWORD"}:
-                    f:value: {}
-                  k:{"name":"ADMIN_USERNAME"}:
-                    f:value: {}
-                  k:{"name":"ENV_CHECK"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"OPENSTACK_KEYSTONE_URL"}:
-                    f:value: {}
-                  k:{"name":"OPENSTACK_KEYSTONE_URL_JEDDAH"}:
-                    f:value: {}
-    manager: kubectl-edit
-    operation: Update
-    time: "2021-02-10T13:22:16Z"
+    time: "2021-01-14T06:21:45Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -187,18 +183,18 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-02-12T13:29:11Z"
-  name: iam
+    time: "2021-02-03T15:36:20Z"
+  name: monitoring
   namespace: default
-  resourceVersion: "5741624"
-  uid: a7b25f9c-9694-4e47-a558-200df5078de1
+  resourceVersion: "4699723"
+  uid: 1c73959f-2071-497c-9e76-3315c773c813
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      name: iam
+      name: monitoring
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -208,24 +204,32 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        name: iam
+        name: monitoring
     spec:
       containers:
       - env:
         - name: NODE_ENV
           value: development
-        - name: ALLOWED_ORIGIN_IP
-          value: 10.81.1.72
-        - name: OPENSTACK_KEYSTONE_URL
-          value: http://10.81.1.100:5000/v3
-        - name: OPENSTACK_KEYSTONE_URL_JEDDAH
-          value: http://10.81.1.100:5000/v3
         - name: PORT
-          value: "8003"
-        - name: ADMIN_USERNAME
-          value: DCM
-        - name: ADMIN_PASSWORD
-          value: letmein
+          value: "8800"
+        - name: PROTOCOL
+          value: http
+        - name: MONASCA_IP
+          value: 10.81.1.60:8070
+        - name: MIDDLEWARE_IP
+          value: http://middleware:8001
+        - name: IAM_IP
+          value: http://iam:8003
+        - name: MONASCA_CPU_TIME
+          value: 50,seconds
+        - name: MONASCA_RAM_TIME
+          value: 6.5,days
+        - name: MONASCA_NETWORK_DOWN_TIME
+          value: 6,minutes
+        - name: MONASCA_NETWORK_UP_TIME
+          value: 6,minutes
+        - name: MONASCA_STORAGE_TIME
+          value: 0,seconds
         - name: MS_LOGGER_IP
           value: ms-logger
         - name: MS_LOGGER_PORT
@@ -233,20 +237,18 @@ spec:
         - name: MS_LOGGER_SECRET_KEY
           value: BC2B36B81AB89F3B83AD227DCAD56
         - name: MS_LOGGER_THIS_SERVICE_NAME
-          value: iam
+          value: monitoring
         - name: MS_LOGGER_THIS_SERVICE_IP
-          value: iam
+          value: monitoring
         - name: MS_LOGGER_THIS_SERVICE_PORT
-          value: "8003"
+          value: "8800"
         - name: LOG_TARGET
           value: both
-        - name: ENV_CHECK
-          value: development
-        image: 10.81.1.72:5000/iam:13
+        image: 10.81.1.72:5000/monitoring:8
         imagePullPolicy: IfNotPresent
-        name: iam
+        name: monitoring
         ports:
-        - containerPort: 8003
+        - containerPort: 8800
           protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
@@ -259,19 +261,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-01-21T06:47:42Z"
-    lastUpdateTime: "2021-01-21T06:47:42Z"
+  - lastTransitionTime: "2021-01-21T06:45:49Z"
+    lastUpdateTime: "2021-01-21T06:45:49Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-01-14T06:17:00Z"
-    lastUpdateTime: "2021-02-12T13:29:11Z"
-    message: ReplicaSet "iam-5cc756cdb6" has successfully progressed.
+  - lastTransitionTime: "2021-01-14T06:21:45Z"
+    lastUpdateTime: "2021-02-03T15:36:21Z"
+    message: ReplicaSet "monitoring-65fb57cc9" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
-  observedGeneration: 19
+  observedGeneration: 5
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1

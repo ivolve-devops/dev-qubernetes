@@ -2,35 +2,177 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "5"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/ms-logger ms-logger=10.81.1.72:5000/ms-logger:7
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:45Z"
+  generation: 5
   labels:
     io.kompose.service: ms-logger
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"ms-logger"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"LOG_TARGET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"LOGSTASH_IP"}:
+                    .: {}
+                    f:name: {}
+                  k:{"name":"LOGSTASH_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8011,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-01-14T05:57:45Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"ms-logger"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-14T06:20:15Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-03T15:33:37Z"
   name: ms-logger
+  namespace: default
+  resourceVersion: "4699283"
+  uid: 50f26773-d1b1-46ac-9a69-6bd4708be48b
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: ms-logger
+    matchLabels:
+      name: ms-logger
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-              #io.kompose.service: iam
         name: ms-logger
     spec:
       containers:
-      - image: 10.81.1.50:5000/logger:1
-        name: ms-logger
-        ports:
-        - containerPort: 8011
-        imagePullPolicy: IfNotPresent
-        env:
-        #- name: MS_LOGGER_IP
-         # value: ms-logger
+      - env:
         - name: MS_LOGGER_PORT
-          value: "8008"
+          value: "8012"
         - name: MS_LOGGER_SECRET_KEY
           value: BC2B36B89F3B83ADCAD56
         - name: MS_LOGGER_THIS_SERVICE_NAME
@@ -42,15 +184,40 @@ spec:
         - name: LOG_TARGET
           value: both
         - name: LOGSTASH_IP
-          value: "logstash-ip"
         - name: LOGSTASH_PORT
           value: "5000"
         - name: SECRET_KEY
           value: BC2B36B89F3B83ADCAD56
-  
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
+        image: 10.81.1.72:5000/ms-logger:7
+        imagePullPolicy: IfNotPresent
+        name: ms-logger
+        ports:
+        - containerPort: 8011
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:45:42Z"
+    lastUpdateTime: "2021-01-21T06:45:42Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:20:15Z"
+    lastUpdateTime: "2021-02-03T15:33:38Z"
+    message: ReplicaSet "ms-logger-857f9cf8db" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 5
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

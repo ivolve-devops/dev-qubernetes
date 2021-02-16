@@ -2,17 +2,144 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "6"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/project-quotas project-quotas=10.81.1.72:5000/project-quotas:9
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:47Z"
+  generation: 6
   labels:
     io.kompose.service: iam
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"project-quotas"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"MONGODB_URI"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NODE_ENV"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8018,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-01-14T05:57:47Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"project-quotas"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-14T06:21:59Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-03T15:36:04Z"
   name: project-quotas
+  namespace: default
+  resourceVersion: "4699657"
+  uid: 0e07e70f-08a5-471e-a5d6-1c98d19033f7
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: project-quotas
+    matchLabels:
+      name: project-quotas
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
@@ -20,21 +147,43 @@ spec:
         name: project-quotas
     spec:
       containers:
-      - image: 10.81.1.50:5000/project-quotas:0.5
-        name: project-quotas
-        ports:
-        - containerPort: 8018
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: NODE_ENV
           value: development
         - name: MONGODB_URI
-          value: "mongodb://mongodb-ip:27017/ms-project-quotas"
+          value: mongodb://10.81.1.72:27017/ms-project-quotas
         - name: PORT
           value: "8018"
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
+        image: 10.81.1.72:5000/project-quotas:9
+        imagePullPolicy: IfNotPresent
+        name: project-quotas
+        ports:
+        - containerPort: 8018
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:46:47Z"
+    lastUpdateTime: "2021-01-21T06:46:47Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:21:59Z"
+    lastUpdateTime: "2021-02-03T15:36:04Z"
+    message: ReplicaSet "project-quotas-5797cd466d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 6
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

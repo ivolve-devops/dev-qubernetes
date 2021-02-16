@@ -2,39 +2,204 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "14"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/ms-billing ms-billing=10.81.1.72:5000/ms-billing:19
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:44Z"
+  generation: 14
   labels:
     io.kompose.service: ms-billing
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"ms-billing"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"BILLING_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"KILLBILL_ADMIN_CREDENTIAL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"KILLBILL_API_SECRET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"KILLBILL_ENDPOINT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"KILLBILL_GLOBAL_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"LOG_TARGET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NODE_ENV"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8020,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-01-14T05:57:44Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"ms-billing"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-14T06:19:10Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-03T15:33:53Z"
   name: ms-billing
+  namespace: default
+  resourceVersion: "4699343"
+  uid: 1a95026e-f302-48d9-a853-21795e6fbb27
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: ms-billing
+    matchLabels:
+      name: ms-billing
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-              #io.kompose.service: iam
         name: ms-billing
     spec:
       containers:
-      - image: 10.81.1.50:5000/ms-billing:1
-        name: ms-billing
-        ports:
-        - containerPort: 8020
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: PORT
           value: "8022"
         - name: NODE_ENV
           value: development
         - name: BILLING_URL
-          value: mongodb://billing-ip:27017/ms-billing
+          value: mongodb://10.81.1.59:27017/ms-billing
         - name: KILLBILL_ENDPOINT
-          value: http://killbill-endpoint-ip:8080
+          value: http://10.81.1.59:8080
         - name: KILLBILL_ADMIN_CREDENTIAL
           value: YWRtaW46cGFzc3dvcmQ=
         - name: KILLBILL_API_SECRET
@@ -55,9 +220,36 @@ spec:
           value: "8020"
         - name: LOG_TARGET
           value: both
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
+        image: 10.81.1.72:5000/ms-billing:19
+        imagePullPolicy: IfNotPresent
+        name: ms-billing
+        ports:
+        - containerPort: 8020
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:46:16Z"
+    lastUpdateTime: "2021-01-21T06:46:16Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:19:10Z"
+    lastUpdateTime: "2021-02-03T15:33:53Z"
+    message: ReplicaSet "ms-billing-656776bbc" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 14
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

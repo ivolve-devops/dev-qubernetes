@@ -2,38 +2,186 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "7"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/reserved-ecs reserved-ecs=10.81.1.72:5000/reserved-ecs:10
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:49Z"
+  generation: 7
   labels:
     io.kompose.service: reserved-ecs
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"reserved-ecs"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"LOG_TARGET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONGODB_URI"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ORCHESTRATOR"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8011,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-01-14T05:57:49Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"reserved-ecs"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-14T06:23:50Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-03T15:38:05Z"
   name: reserved-ecs
+  namespace: default
+  resourceVersion: "4700018"
+  uid: f50193cf-8693-4433-ab2f-aef6e1d0ff13
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: reserved-ecs
+    matchLabels:
+      name: reserved-ecs
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-              #io.kompose.service: reserved-ecs
         name: reserved-ecs
     spec:
       containers:
-      - image: 192.168.1.182:5000/reserved-ecs:0.5
-        name: reserved-ecs
-        ports:
-        - containerPort: 8011
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: PORT
           value: "8011"
         - name: MONGODB_URI
-          value: mongodb://mongobd-ip:27017/ms-reserve-ecs
+          value: mongodb://10.81.1.72:27017/ms-reserve-ecs
         - name: ORCHESTRATOR
           value: python-app:8002
-          #ms-logger serice
         - name: MS_LOGGER_THIS_SERVICE_NAME
           value: reserved-ecs
         - name: MS_LOGGER_THIS_SERVICE_IP
@@ -48,9 +196,36 @@ spec:
           value: BC2B36B81AB89F3B83AD227DCAD56
         - name: LOG_TARGET
           value: both
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
+        image: 10.81.1.72:5000/reserved-ecs:10
+        imagePullPolicy: IfNotPresent
+        name: reserved-ecs
+        ports:
+        - containerPort: 8011
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:47:00Z"
+    lastUpdateTime: "2021-01-21T06:47:00Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:23:57Z"
+    lastUpdateTime: "2021-02-03T15:38:05Z"
+    message: ReplicaSet "reserved-ecs-8bcbcfbb5" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 7
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

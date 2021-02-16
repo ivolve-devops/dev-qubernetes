@@ -2,38 +2,186 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "7"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/kms kms=10.81.1.72:5000/kms:9
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:41Z"
+  generation: 7
   labels:
     io.kompose.service: kms
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"kms"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"BARBICAN_ENDPOINT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"BARBICAN_VESRION"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"LOG_TARGET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MS_LOGGER_THIS_SERVICE_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8010,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-01-14T05:57:41Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"kms"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-14T06:17:00Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-03T15:30:51Z"
   name: kms
+  namespace: default
+  resourceVersion: "4698791"
+  uid: c7962ad3-c763-4a69-a9c3-ce2ea3ce7f74
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: kms
+    matchLabels:
+      name: kms
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-              #io.kompose.service: iam
         name: kms
     spec:
       containers:
-      - image: 10.81.1.50:5000/kms:1
-        name: kms
-        ports:
-        - containerPort: 8010
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: PORT
           value: "8010"
         - name: BARBICAN_VESRION
           value: v1
         - name: BARBICAN_ENDPOINT
-          value:  http://barbican-ip:9311
-          #ms-logger serice
+          value: http://10.81.1.100:9311
         - name: MS_LOGGER_IP
           value: ms-logger
         - name: MS_LOGGER_PORT
@@ -48,11 +196,36 @@ spec:
           value: "8010"
         - name: LOG_TARGET
           value: both
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
-
-
+        image: 10.81.1.72:5000/kms:9
+        imagePullPolicy: IfNotPresent
+        name: kms
+        ports:
+        - containerPort: 8010
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:47:08Z"
+    lastUpdateTime: "2021-01-21T06:47:08Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:17:01Z"
+    lastUpdateTime: "2021-02-03T15:30:51Z"
+    message: ReplicaSet "kms-6dfd78799" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 7
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

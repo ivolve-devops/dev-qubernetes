@@ -2,17 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "15"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/python-app python-app=10.81.1.72:5000/python-app:15
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:48Z"
+  generation: 15
   labels:
     io.kompose.service: python-app
   name: python-app
+  namespace: default
+  resourceVersion: "5741750"
+  uid: 452a0ae5-fe27-4989-a167-d075dc0e20fb
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-         name: python-app
+    matchLabels:
+      name: python-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
@@ -20,14 +34,11 @@ spec:
         name: python-app
     spec:
       containers:
-      - image: 10.81.1.50:5000/python-app:0.5
-        name: python-app
-        ports:
-        - containerPort: 8002
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: OPENSTACK_HOST
-          value: "openstack-ip"
+          value: 10.81.1.100
+        - name: KEY_STONE_PORT
+          value: "5000"
         - name: KEY_STONE_PORT
           value: "5000"
         - name: COMPUTE_PORT
@@ -42,15 +53,6 @@ spec:
           value: http
         - name: API_GATEWAY
           value: http://middleware:8001/api/v1/
-        - name: KEY_STONE_PORT
-          value: "5000"
-        - name: ADMIN_ROLE_ID
-          value: 3819ab406b984958920b74991a81abe0
-        - name:  UAT_CONSOLE_URL
-          value: https://jed-console.detasad.com.sa/ 
-        - name: MS_TRIALACCOUNT_URL
-          value: 'http://10.81.1.102:9000/trialAccount/
-          #ms-logger serice
         - name: MS_LOGGER_THIS_SERVICE_NAME
           value: python-app
         - name: MS_LOGGER_THIS_SERVICE_IP
@@ -65,10 +67,36 @@ spec:
           value: BC2B36B81AB89F3B83AD227DCAD56
         - name: LOG_TARGET
           value: both
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-        maxUnavailable: 0
-        maxSurge: 1
-
+        image: 10.81.1.72:5000/python-app:15
+        imagePullPolicy: IfNotPresent
+        name: python-app
+        ports:
+        - containerPort: 8002
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:47:30Z"
+    lastUpdateTime: "2021-01-21T06:47:30Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:35:29Z"
+    lastUpdateTime: "2021-02-12T13:30:07Z"
+    message: ReplicaSet "python-app-5dcd4b999c" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 15
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

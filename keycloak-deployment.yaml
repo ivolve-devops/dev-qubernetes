@@ -2,39 +2,214 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "14"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"kompose.cmd":"kompose convert","kompose.version":"1.16.0 (0c01309)"},"creationTimestamp":null,"labels":{"io.kompose.service":"keycloak"},"name":"keycloak","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"name":"keycloak"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"keycloak"}},"spec":{"containers":[{"env":[{"name":"SERVER_URL","value":"http://dev-keycloak.ivolve.io:8080/auth/"},{"name":"DEFAULT_REALM_NAME","value":"DCM_REALM"},{"name":"CLIENT_ID","value":"PTCL"},{"name":"CLIENT_SECRET_KEY","value":"1ecda40a-4ac6-4e31-8895-4a9eb9aded94"},{"name":"ADMIN_USERNAME","value":"admin"},{"name":"ADMIN_PASSWORD","value":"admin"},{"name":"ADMIN_INITIAL_REALM","value":"master"},{"name":"MONGODB_URI","value":"mongodb://10.81.1.72:27017/keycloakdb"},{"name":"SECRET_KEY","value":"EqWl3xCW52Tpov4aUEbPDpa2ulMXZ0X2uK9HZyeEE5E="}],"image":"10.81.1.50:5000/keycloak:0.5","imagePullPolicy":"IfNotPresent","name":"keycloak","ports":[{"containerPort":8030}]}]}}}}
+    kubernetes.io/change-cause: kubectl set image deployment/keycloak keycloak=10.81.1.72:5000/keycloak:16
+      --record=true
+  creationTimestamp: "2021-01-20T11:57:06Z"
+  generation: 14
   labels:
     io.kompose.service: keycloak
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"keycloak"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"ADMIN_INITIAL_REALM"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ADMIN_PASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ADMIN_USERNAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"CLIENT_ID"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"CLIENT_SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                  k:{"name":"DEFAULT_REALM_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONGODB_URI"}:
+                    .: {}
+                    f:name: {}
+                  k:{"name":"SECRET_KEY"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SERVER_URL"}:
+                    .: {}
+                    f:name: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8030,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2021-01-20T11:57:06Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"keycloak"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-20T11:58:38Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"keycloak"}:
+                f:env:
+                  k:{"name":"CLIENT_ID_MARKETPLACE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"CLIENT_SECRET_KEY"}:
+                    f:value: {}
+                  k:{"name":"CLIENT_SECRET_KEY_MARKETPLACE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONGODB_URI"}:
+                    f:value: {}
+                  k:{"name":"SERVER_URL"}:
+                    f:value: {}
+    manager: kubectl-edit
+    operation: Update
+    time: "2021-02-15T09:55:24Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-15T09:55:28Z"
   name: keycloak
+  namespace: default
+  resourceVersion: "6074744"
+  uid: 1c34279b-48ce-4bb3-9ff9-68ac8d1b50e4
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: keycloak
+    matchLabels:
+      name: keycloak
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-              
         name: keycloak
     spec:
       containers:
-      - image: 10.81.1.50:5000/keycloak:0.5
-        name: keycloak
-        ports:
-        - containerPort: 8030
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: SERVER_URL
-          value: "http://master-ip:8080/auth/"
+          value: http://dev-keycloak.ivolve.io:8080/auth/
         - name: DEFAULT_REALM_NAME
           value: DCM_REALM
         - name: CLIENT_ID
           value: PTCL
         - name: CLIENT_SECRET_KEY
-          value: 7137fc1f-23f3-4f35-88dc-73d944589568
+          value: 2c58814d-5d16-4331-9322-b20582c3b97b
+        - name: CLIENT_ID_MARKETPLACE
+          value: marketplace
+        - name: CLIENT_SECRET_KEY_MARKETPLACE
+          value: 612f33b3-3fa5-4a21-88f6-79a77c8cd3b2
         - name: ADMIN_USERNAME
           value: admin
         - name: ADMIN_PASSWORD
@@ -42,16 +217,39 @@ spec:
         - name: ADMIN_INITIAL_REALM
           value: master
         - name: MONGODB_URI
-          value: mongodb://localhost:27017
-        - name: key
+          value: mongodb://10.81.1.72:27017
+        - name: SECRET_KEY
           value: EqWl3xCW52Tpov4aUEbPDpa2ulMXZ0X2uK9HZyeEE5E=
-               
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
-
-
-
+        image: 10.81.1.72:5000/keycloak:16
+        imagePullPolicy: IfNotPresent
+        name: keycloak
+        ports:
+        - containerPort: 8030
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-29T07:53:26Z"
+    lastUpdateTime: "2021-01-29T07:53:26Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-20T11:57:06Z"
+    lastUpdateTime: "2021-02-15T09:55:29Z"
+    message: ReplicaSet "keycloak-7978bccdd5" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 14
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

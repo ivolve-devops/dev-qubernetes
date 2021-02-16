@@ -2,56 +2,210 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "7"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+    kubernetes.io/change-cause: kubectl set image deployment/trial-account trial-account=10.81.1.72:5000/trial-account:10
+      --record=true
+  creationTimestamp: "2021-01-14T05:57:50Z"
+  generation: 7
   labels:
     io.kompose.service: trial-account
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kompose.cmd: {}
+          f:kompose.version: {}
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:containers:
+              k:{"name":"trial-account"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"ADMINUSERNAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ADMINUSERPASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ADMINUSERPROJECT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ALLOWED_ORIGIN_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"HOST"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONGODB_BASE_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NODE_ENV"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"OPENSTACK_KEYSTONE_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ORCHESTRATOR"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SCHEDULING_MAIL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SENDER_PASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SENDER_USERNAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8020,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-01-14T05:57:50Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:kubernetes.io/change-cause: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"trial-account"}:
+                f:image: {}
+    manager: kubectl-set
+    operation: Update
+    time: "2021-01-14T06:23:50Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-02-03T15:37:49Z"
   name: trial-account
+  namespace: default
+  resourceVersion: "4699932"
+  uid: 7fe0c136-f2f2-41f9-9bb8-92221044c28e
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
-      matchLabels:
-          name: trial-account
+    matchLabels:
+      name: trial-account
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-              #io.kompose.service: trial-account
         name: trial-account
     spec:
       containers:
-      - image: 10.81.1.68:5000/trial-account:1
-        name: trial-account
-        ports:
-        - containerPort: 8020
-        imagePullPolicy: IfNotPresent
-        env:
+      - env:
         - name: NODE_ENV
           value: development
         - name: ALLOWED_ORIGIN_IP
-          value: "master-ip"
+          value: 10.81.1.72
         - name: OPENSTACK_KEYSTONE_URL
-          value: "http://openstack-keystone-ip:5000"
+          value: http://10.81.1.100:5000
         - name: PORT
           value: "8020"
-        - name: LOGGER
-          value: true 
-        - name: DEBUG
-          value: true 
-        - name: ENVIRONMENT_SETUP
-          value: uat      
-      #ms-logger serice
         - name: MONGODB_BASE_URL
-          value: mongodb://mongodb-ip:27017/ms-trialAccount
+          value: mongodb://10.81.1.72:27017/ms-trialAccount
         - name: SENDER_USERNAME
-          value: "testingmailivolve@yahoo.com"
+          value: testingmailivolve@yahoo.com
         - name: SENDER_PASSWORD
           value: password
         - name: HOST
-          value: "smtp.mail.yahoo.com"
+          value: smtp.mail.yahoo.com
         - name: SCHEDULING_MAIL
-          value: "0 */12 * * *"
+          value: 0 */12 * * *
         - name: ORCHESTRATOR
           value: http://python-app:8002
         - name: ADMINUSERNAME
@@ -60,15 +214,36 @@ spec:
           value: 1d016ec856d1e120646fc7847f62ba29
         - name: ADMINUSERPROJECT
           value: 129ff8be551a0bb1ba06583d3b6bcca9f9fe791ded17f8f1116b8ccdea9627045c2b5965b562e7b8080afb93d2c69368
-        - name: MIDDLEWARE
-          value: http://middleware:8001 
-        - name: KEYCLOAK_BASEURL
-          value: http://10.81.1.50:32354/keycloak     
-         
-          
-      #restartPolicy: Always
-  strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 0
-       maxSurge: 1
+        image: 10.81.1.72:5000/trial-account:10
+        imagePullPolicy: IfNotPresent
+        name: trial-account
+        ports:
+        - containerPort: 8020
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-21T06:47:07Z"
+    lastUpdateTime: "2021-01-21T06:47:07Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-14T06:23:53Z"
+    lastUpdateTime: "2021-02-03T15:37:49Z"
+    message: ReplicaSet "trial-account-6bfd78f7f8" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 7
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
