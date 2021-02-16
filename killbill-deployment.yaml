@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: killbill
+  name: killbill
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: killbill
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: killbill
+    spec:
+      containers:
+        - env:
+            - name: KILLBILL_DAO_PASSWORD
+              value: killbill
+            - name: KILLBILL_DAO_URL
+              value: jdbc:mysql://10.81.1.72:3306/killbill
+            - name: KILLBILL_DAO_USER
+              value: killbill
+          image: killbill/killbill:0.20.13
+          name: killbill
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}

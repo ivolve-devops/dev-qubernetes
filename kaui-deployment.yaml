@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kaui
+  name: kaui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kaui
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: kaui
+    spec:
+      containers:
+        - env:
+            - name: KAUI_CONFIG_DAO_PASSWORD
+              value: killbill
+            - name: KAUI_CONFIG_DAO_URL
+              value: jdbc:mysql://10.81.1.72:3306/kaui
+            - name: KAUI_CONFIG_DAO_USER
+              value: killbill
+            - name: KAUI_KILLBILL_URL
+              value: http://killbill:8080
+          image: killbill/kaui:1.0.6
+          name: kaui
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
