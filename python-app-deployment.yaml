@@ -2,19 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "15"
+    deployment.kubernetes.io/revision: "9"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-    kubernetes.io/change-cause: kubectl set image deployment/python-app python-app=10.81.1.72:5000/python-app:15
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"35","kompose.cmd":"kompose convert","kompose.version":"1.16.0 (0c01309)","kubernetes.io/change-cause":"kubectl set image deployment/python-app python-app=10.81.1.50:5000/python-app:104 --record=true"},"creationTimestamp":"2020-10-19T13:16:57Z","generation":35,"labels":{"io.kompose.service":"python-app"},"name":"python-app","namespace":"default","resourceVersion":"27912889","selfLink":"/apis/apps/v1/namespaces/default/deployments/python-app","uid":"0bae7091-76a5-4cbc-afef-2e9817eec3ba"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"python-app"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"python-app"}},"spec":{"containers":[{"env":[{"name":"OPENSTACK_HOST","value":"cloud2.ivlab.io"},{"name":"KEY_STONE_PORT","value":"5000"},{"name":"KEY_STONE_PORT","value":"5000"},{"name":"COMPUTE_PORT","value":"8774"},{"name":"NETWORK_PORT","value":"9696"},{"name":"VOLUME_PORT","value":"8776"},{"name":"GLANCE_PORT","value":"9292"},{"name":"PROTOCOL","value":"http"},{"name":"API_GATEWAY","value":"http://middleware:8001/api/v1/"},{"name":"MS_LOGGER_THIS_SERVICE_NAME","value":"python-app"},{"name":"MS_LOGGER_THIS_SERVICE_IP","value":"python-app"},{"name":"MS_LOGGER_THIS_SERVICE_PORT","value":"8002"},{"name":"MS_LOGGER_IP","value":"ms-logger"},{"name":"MS_LOGGER_PORT","value":"8012"},{"name":"MS_LOGGER_SECRET_KEY","value":"BC2B36B81AB89F3B83AD227DCAD56"},{"name":"LOG_TARGET","value":"both"},{"name":"ADMIN_ROLE_ID","value":"06a2335b3d3147199f9177146fd26ce1"},{"name":"MEMBER_ROLE_ID","value":"20874264124349b2b773d954a60f18ff"},{"name":"APM_SERVER_URL","value":"http://10.81.1.96:8200"},{"name":"ENVIRONMENT","value":"qa"}],"image":"10.81.1.50:5000/python-app:104","imagePullPolicy":"IfNotPresent","name":"python-app","ports":[{"containerPort":8002,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2021-02-18T10:12:39Z","lastUpdateTime":"2021-02-18T10:12:39Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2020-10-19T14:06:12Z","lastUpdateTime":"2021-03-03T12:36:29Z","message":"ReplicaSet \"python-app-59c4648558\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":35,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    kubernetes.io/change-cause: kubectl set image deployment/python-app python-app=10.82.3.2:5000/python-app:102
       --record=true
-  creationTimestamp: "2021-01-14T05:57:48Z"
-  generation: 15
+  creationTimestamp: "2021-03-15T07:09:04Z"
+  generation: 9
   labels:
     io.kompose.service: python-app
   name: python-app
   namespace: default
-  resourceVersion: "5741750"
-  uid: 452a0ae5-fe27-4989-a167-d075dc0e20fb
+  resourceVersion: "2208957"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/python-app
+  uid: 0d4fe799-7818-41f3-9d79-6c9718c67c29
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -36,7 +39,7 @@ spec:
       containers:
       - env:
         - name: OPENSTACK_HOST
-          value: 10.81.1.100
+          value: cloud1.ivlab.io
         - name: KEY_STONE_PORT
           value: "5000"
         - name: KEY_STONE_PORT
@@ -67,9 +70,26 @@ spec:
           value: BC2B36B81AB89F3B83AD227DCAD56
         - name: LOG_TARGET
           value: both
-        image: 10.81.1.72:5000/python-app:15
+        - name: ADMIN_ROLE_ID
+          value: 85de91676ef043cf978fed6c1c067323
+        - name: MEMBER_ROLE_ID
+          value: 94ab0b1bc40841668909f3a5a65c7c51
+        - name: APM_SERVER_URL
+          value: http://10.82.3.7:8200
+        - name: ENVIRONMENT
+          value: qa
+        - name: PYTHONUNBUFFERED
+          value: "0"
+        image: 10.82.3.2:5000/python-app:102
         imagePullPolicy: IfNotPresent
         name: python-app
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
         ports:
         - containerPort: 8002
           protocol: TCP
@@ -84,19 +104,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-01-21T06:47:30Z"
-    lastUpdateTime: "2021-01-21T06:47:30Z"
+  - lastTransitionTime: "2021-03-16T05:32:32Z"
+    lastUpdateTime: "2021-03-19T12:31:00Z"
+    message: ReplicaSet "python-app-b88c75db" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2021-03-25T14:44:34Z"
+    lastUpdateTime: "2021-03-25T14:44:34Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-01-14T06:35:29Z"
-    lastUpdateTime: "2021-02-12T13:30:07Z"
-    message: ReplicaSet "python-app-5dcd4b999c" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 15
+  observedGeneration: 9
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1

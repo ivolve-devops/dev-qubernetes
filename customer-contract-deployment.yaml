@@ -2,13 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "5"
+    deployment.kubernetes.io/revision: "9"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-    kubernetes.io/change-cause: kubectl set image deployment/customer-contract customer-contract=10.81.1.72:5000/customer-contract:11
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"16","kompose.cmd":"kompose convert","kompose.version":"1.16.0 (0c01309)","kubernetes.io/change-cause":"kubectl set image deployment/customer-contract customer-contract=10.81.1.50:5000/customer-contract:15 --record=true"},"creationTimestamp":"2020-10-19T13:16:18Z","generation":17,"labels":{"io.kompose.service":"customer-contract"},"managedFields":[{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kompose.cmd":{},"f:kompose.version":{},"f:kubectl.kubernetes.io/last-applied-configuration":{},"f:kubernetes.io/change-cause":{}},"f:labels":{".":{},"f:io.kompose.service":{}}},"f:spec":{"f:progressDeadlineSeconds":{},"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{"f:matchLabels":{".":{},"f:name":{}}},"f:strategy":{"f:rollingUpdate":{".":{},"f:maxSurge":{},"f:maxUnavailable":{}},"f:type":{}},"f:template":{"f:metadata":{"f:labels":{".":{},"f:name":{}}},"f:spec":{"f:containers":{"k:{\"name\":\"customer-contract\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"APM_SERVER_URL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENVIRONMENT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MONGODB_URI\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OpenstackRoutes\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PORT\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8003,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}},"manager":"kubectl","operation":"Update","time":"2021-03-03T11:21:02Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:deployment.kubernetes.io/revision":{}}},"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:updatedReplicas":{}}},"manager":"kube-controller-manager","operation":"Update","time":"2021-03-03T11:21:12Z"}],"name":"customer-contract","namespace":"default","resourceVersion":"27900895","selfLink":"/apis/apps/v1/namespaces/default/deployments/customer-contract","uid":"3d93b749-5f0d-4233-bd12-fdbe0bd8e20c"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"customer-contract"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"customer-contract"}},"spec":{"containers":[{"env":[{"name":"NODE_ENV","value":"development"},{"name":"PORT","value":"8024"},{"name":"MONGODB_URI","value":"mongodb://10.81.1.50:27017/ms-customer-contract"},{"name":"OpenstackRoutes","value":"http://cloud2.ivlab.io:5000/v3"},{"name":"APM_SERVER_URL","value":"http://10.81.1.96:8200"},{"name":"ENVIRONMENT","value":"qa"}],"image":"10.81.1.50:5000/customer-contract:15","imagePullPolicy":"IfNotPresent","name":"customer-contract","ports":[{"containerPort":8003,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2020-12-18T11:46:35Z","lastUpdateTime":"2020-12-18T11:46:35Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2021-01-14T07:26:52Z","lastUpdateTime":"2021-03-03T11:21:12Z","message":"ReplicaSet \"customer-contract-6c68b7f44f\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":17,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    kubernetes.io/change-cause: kubectl set image deployment/customer-contract customer-contract=10.82.3.2:5000/customer-contract:16
       --record=true
-  creationTimestamp: "2021-01-14T05:57:38Z"
-  generation: 5
+  creationTimestamp: "2021-03-15T07:09:02Z"
+  generation: 9
   labels:
     io.kompose.service: customer-contract
   managedFields:
@@ -20,6 +22,7 @@ metadata:
           .: {}
           f:kompose.cmd: {}
           f:kompose.version: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
         f:labels:
           .: {}
           f:io.kompose.service: {}
@@ -27,7 +30,10 @@ metadata:
         f:progressDeadlineSeconds: {}
         f:replicas: {}
         f:revisionHistoryLimit: {}
-        f:selector: {}
+        f:selector:
+          f:matchLabels:
+            .: {}
+            f:name: {}
         f:strategy:
           f:rollingUpdate:
             .: {}
@@ -45,10 +51,16 @@ metadata:
                 .: {}
                 f:env:
                   .: {}
-                  k:{"name":"MONGODB_URI"}:
+                  k:{"name":"APM_SERVER_URL"}:
+                    .: {}
+                    f:name: {}
+                  k:{"name":"ENVIRONMENT"}:
                     .: {}
                     f:name: {}
                     f:value: {}
+                  k:{"name":"MONGODB_URI"}:
+                    .: {}
+                    f:name: {}
                   k:{"name":"NODE_ENV"}:
                     .: {}
                     f:name: {}
@@ -56,7 +68,6 @@ metadata:
                   k:{"name":"OpenstackRoutes"}:
                     .: {}
                     f:name: {}
-                    f:value: {}
                   k:{"name":"PORT"}:
                     .: {}
                     f:name: {}
@@ -79,7 +90,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl-create
     operation: Update
-    time: "2021-01-14T05:57:38Z"
+    time: "2021-03-15T07:09:02Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -94,7 +105,65 @@ metadata:
                 f:image: {}
     manager: kubectl-set
     operation: Update
-    time: "2021-01-14T06:16:53Z"
+    time: "2021-03-16T05:10:38Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"customer-contract"}:
+                f:env:
+                  k:{"name":"APM_SERVER_URL"}:
+                    f:value: {}
+                  k:{"name":"COMPUTE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ECS_RESOURCE_UUID"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"KEYSTONE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MONGODB_URI"}:
+                    f:value: {}
+                  k:{"name":"MS_OPENSTACK"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NETWORK"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"OPENSTACK"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"OPENSTACK_USERNAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"OpenstackRoutes"}:
+                    f:value: {}
+                  k:{"name":"PASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PROJECT_ID"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"USAGE_REPORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+    manager: kubectl-edit
+    operation: Update
+    time: "2021-03-17T12:47:08Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -127,11 +196,12 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-02-02T12:02:00Z"
+    time: "2021-03-25T13:34:02Z"
   name: customer-contract
   namespace: default
-  resourceVersion: "4564318"
-  uid: 5e63eb26-3f75-41a6-94d5-4526f2adbc2a
+  resourceVersion: "2197989"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/customer-contract
+  uid: 15d57942-6288-4acd-859d-4717cb929ffb
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -157,12 +227,43 @@ spec:
         - name: PORT
           value: "8024"
         - name: MONGODB_URI
-          value: mongodb://10.81.1.72:27017/ms-customer-contract
+          value: mongodb://10.82.3.2:27017/ms-customer-contract
         - name: OpenstackRoutes
-          value: http://10.81.1.100:5000/v3
-        image: 10.81.1.72:5000/customer-contract:11
+          value: http://cloud1.ivlab.io:5000/v3
+        - name: MS_OPENSTACK
+          value: python-app:8002
+        - name: OPENSTACK_USERNAME
+          value: qa
+        - name: PASSWORD
+          value: letmein2QA!!
+        - name: PROJECT_ID
+          value: 0c5d638a6a3a4c87b53be0bd539942e1
+        - name: OPENSTACK
+          value: http://cloud1.ivlab.io
+        - name: KEYSTONE
+          value: 5000/v3
+        - name: COMPUTE
+          value: 8774/v2
+        - name: NETWORK
+          value: 9696/v2.0
+        - name: USAGE_REPORT
+          value: usage-report:8006
+        - name: ECS_RESOURCE_UUID
+          value: f54ea7a2-775d-11eb-9439-0242ac130002
+        - name: APM_SERVER_URL
+          value: http://10.82.3.7:8200
+        - name: ENVIRONMENT
+          value: qa
+        image: 10.82.3.2:5000/customer-contract:16
         imagePullPolicy: IfNotPresent
         name: customer-contract
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
         ports:
         - containerPort: 8003
           protocol: TCP
@@ -177,19 +278,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-01-21T06:47:27Z"
-    lastUpdateTime: "2021-01-21T06:47:27Z"
+  - lastTransitionTime: "2021-03-16T05:10:38Z"
+    lastUpdateTime: "2021-03-17T12:47:10Z"
+    message: ReplicaSet "customer-contract-7f4bb6fddf" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2021-03-25T13:34:02Z"
+    lastUpdateTime: "2021-03-25T13:34:02Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-01-14T06:16:53Z"
-    lastUpdateTime: "2021-02-02T12:02:00Z"
-    message: ReplicaSet "customer-contract-754d4ffcdd" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 5
+  observedGeneration: 9
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1

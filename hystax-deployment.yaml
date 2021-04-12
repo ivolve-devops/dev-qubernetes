@@ -2,13 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "16"
+    deployment.kubernetes.io/revision: "3"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
-    kubernetes.io/change-cause: kubectl set image deployment/hystax hystax=10.81.1.72:5000/hystax:16
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"22","kompose.cmd":"kompose convert","kompose.version":"1.16.0 (0c01309)","kubernetes.io/change-cause":"kubectl set image deployment/hystax hystax=10.81.1.50:5000/hystax:41 --record=true"},"creationTimestamp":"2020-10-19T13:16:21Z","generation":22,"labels":{"io.kompose.service":"hystax"},"managedFields":[{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kompose.cmd":{},"f:kompose.version":{},"f:kubectl.kubernetes.io/last-applied-configuration":{},"f:kubernetes.io/change-cause":{}},"f:labels":{".":{},"f:io.kompose.service":{}}},"f:spec":{"f:progressDeadlineSeconds":{},"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{"f:matchLabels":{".":{},"f:name":{}}},"f:strategy":{"f:rollingUpdate":{".":{},"f:maxSurge":{},"f:maxUnavailable":{}},"f:type":{}},"f:template":{"f:metadata":{"f:labels":{".":{},"f:name":{}}},"f:spec":{"f:containers":{"k:{\"name\":\"hystax\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"ADMIN_ROLE_ID\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ADMIN_ROLE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"APM_SERVER_URL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENVIRONMENT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"HYSTAX_EMAIL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"HYSTAX_IP\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"HYSTAX_PASSWORD\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"LOG_TARGET\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MEMBER_ROLE_ID\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MOUNTPOINT_ID\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_CUSTOMER_INTEGRATION\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_LOGGER_IP\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_LOGGER_PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_LOGGER_SECRET_KEY\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_LOGGER_THIS_SERVICE_IP\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_LOGGER_THIS_SERVICE_NAME\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_LOGGER_THIS_SERVICE_PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MS_TRIALACCOUNT_URL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"NODE_TLS_REJECT_UNAUTHORIZED\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PARTNER_ID\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PORT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PRICING\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PROTOCOL\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8015,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}},"manager":"kubectl","operation":"Update","time":"2021-03-03T11:23:51Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:deployment.kubernetes.io/revision":{}}},"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:updatedReplicas":{}}},"manager":"kube-controller-manager","operation":"Update","time":"2021-03-03T11:23:59Z"}],"name":"hystax","namespace":"default","resourceVersion":"27901445","selfLink":"/apis/apps/v1/namespaces/default/deployments/hystax","uid":"79eb0486-9306-4cdc-a586-5cb9a6d7eeb2"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"hystax"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"hystax"}},"spec":{"containers":[{"env":[{"name":"NODE_ENV","value":"development"},{"name":"PORT","value":"8015"},{"name":"PROTOCOL","value":"https"},{"name":"HYSTAX_IP","value":"10.81.1.124"},{"name":"ADMIN_ROLE_ID","value":"5"},{"name":"MEMBER_ROLE_ID","value":"6"},{"name":"NODE_TLS_REJECT_UNAUTHORIZED","value":"0"},{"name":"ADMIN_ROLE_NAME","value":"client_admin"},{"name":"HYSTAX_EMAIL","value":"hasan.shafiq@ivolve.io"},{"name":"MOUNTPOINT_ID","value":"e7d6a71f-f3f3-4f66-83d6-c851359f3a23"},{"name":"HYSTAX_PASSWORD","value":"35e55f616cf716ae80cae4977c6389e9"},{"name":"MS_CUSTOMER_INTEGRATION","value":"http://customer-integration:8023"},{"name":"PRICING","value":"http://ms-settings:8005"},{"name":"MS_TRIALACCOUNT_URL","value":"http://trial-account:8020/trialAccount"},{"name":"MS_LOGGER_IP","value":"ms-logger"},{"name":"MS_LOGGER_PORT","value":"8012"},{"name":"MS_LOGGER_SECRET_KEY","value":"BC2B36B81AB89F3B83AD227DCAD56"},{"name":"MS_LOGGER_THIS_SERVICE_NAME","value":"middleware"},{"name":"PARTNER_ID","value":"d1e812c3-677c-4241-9093-fe8950547d46"},{"name":"MS_LOGGER_THIS_SERVICE_IP","value":"middleware"},{"name":"MS_LOGGER_THIS_SERVICE_PORT","value":"8001"},{"name":"LOG_TARGET","value":"both"},{"name":"APM_SERVER_URL","value":"http://10.81.1.96:8200"},{"name":"ENVIRONMENT","value":"qa"}],"image":"10.81.1.50:5000/hystax:41","imagePullPolicy":"IfNotPresent","name":"hystax","ports":[{"containerPort":8015,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2021-02-12T11:05:54Z","lastUpdateTime":"2021-02-12T11:05:54Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2021-01-14T08:52:19Z","lastUpdateTime":"2021-03-03T11:23:59Z","message":"ReplicaSet \"hystax-85c5d5c7bc\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":22,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    kubernetes.io/change-cause: kubectl set image deployment/hystax hystax=10.82.3.2:5000/hystax:42
       --record=true
-  creationTimestamp: "2021-01-14T05:57:39Z"
-  generation: 16
+  creationTimestamp: "2021-03-15T07:09:02Z"
+  generation: 3
   labels:
     io.kompose.service: hystax
   managedFields:
@@ -20,6 +22,7 @@ metadata:
           .: {}
           f:kompose.cmd: {}
           f:kompose.version: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
         f:labels:
           .: {}
           f:io.kompose.service: {}
@@ -27,7 +30,10 @@ metadata:
         f:progressDeadlineSeconds: {}
         f:replicas: {}
         f:revisionHistoryLimit: {}
-        f:selector: {}
+        f:selector:
+          f:matchLabels:
+            .: {}
+            f:name: {}
         f:strategy:
           f:rollingUpdate:
             .: {}
@@ -45,22 +51,49 @@ metadata:
                 .: {}
                 f:env:
                   .: {}
+                  k:{"name":"ADMIN_ROLE_ID"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"ADMIN_ROLE_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"APM_SERVER_URL"}:
+                    .: {}
+                    f:name: {}
+                  k:{"name":"ENVIRONMENT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
                   k:{"name":"HYSTAX_EMAIL"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                   k:{"name":"HYSTAX_IP"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                   k:{"name":"HYSTAX_PASSWORD"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                   k:{"name":"LOG_TARGET"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MEMBER_ROLE_ID"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MOUNTPOINT_ID"}:
                     .: {}
                     f:name: {}
                     f:value: {}
                   k:{"name":"MS_CUSTOMER_INTEGRATION"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                   k:{"name":"MS_LOGGER_IP"}:
                     .: {}
                     f:name: {}
@@ -85,7 +118,19 @@ metadata:
                     .: {}
                     f:name: {}
                     f:value: {}
+                  k:{"name":"MS_TRIALACCOUNT_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
                   k:{"name":"NODE_ENV"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NODE_TLS_REJECT_UNAUTHORIZED"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PARTNER_ID"}:
                     .: {}
                     f:name: {}
                     f:value: {}
@@ -93,9 +138,14 @@ metadata:
                     .: {}
                     f:name: {}
                     f:value: {}
+                  k:{"name":"PRICING"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
                   k:{"name":"PROTOCOL"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                 f:imagePullPolicy: {}
                 f:name: {}
                 f:ports:
@@ -114,7 +164,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl-create
     operation: Update
-    time: "2021-01-14T05:57:39Z"
+    time: "2021-03-15T07:09:02Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -129,7 +179,7 @@ metadata:
                 f:image: {}
     manager: kubectl-set
     operation: Update
-    time: "2021-01-14T06:19:37Z"
+    time: "2021-03-16T05:21:40Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -139,43 +189,11 @@ metadata:
             f:containers:
               k:{"name":"hystax"}:
                 f:env:
-                  k:{"name":"ADMIN_ROLE_ID"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"ADMIN_ROLE_NAME"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"HYSTAX_EMAIL"}:
-                    f:value: {}
-                  k:{"name":"HYSTAX_IP"}:
-                    f:value: {}
-                  k:{"name":"HYSTAX_PASSWORD"}:
-                    f:value: {}
-                  k:{"name":"MEMBER_ROLE_ID"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"MOUNTPOINT_ID"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"MS_CUSTOMER_INTEGRATION"}:
-                    f:value: {}
-                  k:{"name":"NODE_TLS_REJECT_UNAUTHORIZED"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"PARTNER_ID"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"PROTOCOL"}:
+                  k:{"name":"APM_SERVER_URL"}:
                     f:value: {}
     manager: kubectl-edit
     operation: Update
-    time: "2021-02-12T14:23:29Z"
+    time: "2021-03-17T10:39:18Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -208,11 +226,12 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-02-12T14:23:33Z"
+    time: "2021-03-25T13:34:01Z"
   name: hystax
   namespace: default
-  resourceVersion: "5746128"
-  uid: 44f73763-9fdc-4c53-9ccc-5a42aee41997
+  resourceVersion: "2197920"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/hystax
+  uid: c6610ca0-7008-4c74-8800-8a3293d1fa4a
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -241,24 +260,26 @@ spec:
           value: https
         - name: HYSTAX_IP
           value: 10.81.1.124
-        - name: HYSTAX_EMAIL
-          value: hasan.shafiq@ivolve.io
-        - name: HYSTAX_PASSWORD
-          value: 35e55f616cf716ae80cae4977c6389e9
-        - name: MS_CUSTOMER_INTEGRATION
-          value: customer-integration:8023
-        - name: PARTNER_ID
-          value: d7bd633c-4a9b-4607-908d-b2b25d524bc3
-        - name: MOUNTPOINT_ID
-          value: 59d5a6d8-ceb9-4870-b4ff-85d8ed1ae5b5
         - name: ADMIN_ROLE_ID
           value: "5"
         - name: MEMBER_ROLE_ID
           value: "6"
-        - name: ADMIN_ROLE_NAME
-          value: client_admin
         - name: NODE_TLS_REJECT_UNAUTHORIZED
           value: "0"
+        - name: ADMIN_ROLE_NAME
+          value: client_admin
+        - name: HYSTAX_EMAIL
+          value: hasan.shafiq@ivolve.io
+        - name: MOUNTPOINT_ID
+          value: e7d6a71f-f3f3-4f66-83d6-c851359f3a23
+        - name: HYSTAX_PASSWORD
+          value: 35e55f616cf716ae80cae4977c6389e9
+        - name: MS_CUSTOMER_INTEGRATION
+          value: http://customer-integration:8023
+        - name: PRICING
+          value: http://ms-settings:8005
+        - name: MS_TRIALACCOUNT_URL
+          value: http://trial-account:8020/trialAccount
         - name: MS_LOGGER_IP
           value: ms-logger
         - name: MS_LOGGER_PORT
@@ -267,15 +288,28 @@ spec:
           value: BC2B36B81AB89F3B83AD227DCAD56
         - name: MS_LOGGER_THIS_SERVICE_NAME
           value: middleware
+        - name: PARTNER_ID
+          value: d1e812c3-677c-4241-9093-fe8950547d46
         - name: MS_LOGGER_THIS_SERVICE_IP
           value: middleware
         - name: MS_LOGGER_THIS_SERVICE_PORT
           value: "8001"
         - name: LOG_TARGET
           value: both
-        image: 10.81.1.72:5000/hystax:16
+        - name: APM_SERVER_URL
+          value: http://10.82.3.7:8200
+        - name: ENVIRONMENT
+          value: qa
+        image: 10.82.3.2:5000/hystax:42
         imagePullPolicy: IfNotPresent
         name: hystax
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
         ports:
         - containerPort: 8015
           protocol: TCP
@@ -290,19 +324,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-01-21T06:47:17Z"
-    lastUpdateTime: "2021-01-21T06:47:17Z"
+  - lastTransitionTime: "2021-03-16T05:21:40Z"
+    lastUpdateTime: "2021-03-17T10:39:20Z"
+    message: ReplicaSet "hystax-5d56c7f67d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2021-03-25T13:34:01Z"
+    lastUpdateTime: "2021-03-25T13:34:01Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-01-14T06:19:37Z"
-    lastUpdateTime: "2021-02-12T14:23:33Z"
-    message: ReplicaSet "hystax-6dbfd6f6b9" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 16
+  observedGeneration: 3
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1

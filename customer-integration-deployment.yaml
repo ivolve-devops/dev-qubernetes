@@ -2,13 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "10"
+    deployment.kubernetes.io/revision: "4"
     kompose.cmd: kompose convert
     kompose.version: 1.16.0 (0c01309)
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"11","kompose.cmd":"kompose convert","kompose.version":"1.16.0 (0c01309)","kubernetes.io/change-cause":"kubectl set image deployment/customer-integration customer-integration=10.81.1.50:5000/customer-integration:22 --record=true"},"creationTimestamp":"2020-10-19T13:16:18Z","generation":12,"labels":{"io.kompose.service":"customer-integration"},"managedFields":[{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kompose.cmd":{},"f:kompose.version":{},"f:kubectl.kubernetes.io/last-applied-configuration":{},"f:kubernetes.io/change-cause":{}},"f:labels":{".":{},"f:io.kompose.service":{}}},"f:spec":{"f:progressDeadlineSeconds":{},"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{"f:matchLabels":{".":{},"f:name":{}}},"f:strategy":{"f:rollingUpdate":{".":{},"f:maxSurge":{},"f:maxUnavailable":{}},"f:type":{}},"f:template":{"f:metadata":{"f:labels":{".":{},"f:name":{}}},"f:spec":{"f:containers":{"k:{\"name\":\"customer-integration\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"APM_SERVER_URL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENVIRONMENT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MONGODB_URI\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PORT\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8003,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}},"manager":"kubectl","operation":"Update","time":"2021-03-03T11:21:55Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:deployment.kubernetes.io/revision":{}}},"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:updatedReplicas":{}}},"manager":"kube-controller-manager","operation":"Update","time":"2021-03-03T11:22:05Z"}],"name":"customer-integration","namespace":"default","resourceVersion":"27901060","selfLink":"/apis/apps/v1/namespaces/default/deployments/customer-integration","uid":"c48a9037-5e14-4f30-96e9-e6ae44ecf98a"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"customer-integration"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"customer-integration"}},"spec":{"containers":[{"env":[{"name":"NODE_ENV","value":"development"},{"name":"PORT","value":"8023"},{"name":"MONGODB_URI","value":"mongodb://10.81.1.50:27017/ms-customer-integration"},{"name":"APM_SERVER_URL","value":"http://10.81.1.96:8200"},{"name":"ENVIRONMENT","value":"qa"}],"image":"10.81.1.50:5000/customer-integration:22","imagePullPolicy":"IfNotPresent","name":"customer-integration","ports":[{"containerPort":8003,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2020-12-18T11:46:35Z","lastUpdateTime":"2020-12-18T11:46:35Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2020-10-19T13:58:26Z","lastUpdateTime":"2021-03-03T11:22:05Z","message":"ReplicaSet \"customer-integration-7d644b4c45\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":12,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
     kubernetes.io/change-cause: kubectl set image deployment/customer-integration
-      customer-integration=10.81.1.72:5000/customer-integration:13 --record=true
-  creationTimestamp: "2021-01-14T05:57:38Z"
-  generation: 10
+      customer-integration=10.82.3.2:5000/customer-integration:23 --record=true
+  creationTimestamp: "2021-03-15T07:09:02Z"
+  generation: 4
   labels:
     io.kompose.service: customer-integration
   managedFields:
@@ -20,6 +22,7 @@ metadata:
           .: {}
           f:kompose.cmd: {}
           f:kompose.version: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
         f:labels:
           .: {}
           f:io.kompose.service: {}
@@ -27,7 +30,10 @@ metadata:
         f:progressDeadlineSeconds: {}
         f:replicas: {}
         f:revisionHistoryLimit: {}
-        f:selector: {}
+        f:selector:
+          f:matchLabels:
+            .: {}
+            f:name: {}
         f:strategy:
           f:rollingUpdate:
             .: {}
@@ -45,10 +51,16 @@ metadata:
                 .: {}
                 f:env:
                   .: {}
-                  k:{"name":"MONGODB_URI"}:
+                  k:{"name":"APM_SERVER_URL"}:
+                    .: {}
+                    f:name: {}
+                  k:{"name":"ENVIRONMENT"}:
                     .: {}
                     f:name: {}
                     f:value: {}
+                  k:{"name":"MONGODB_URI"}:
+                    .: {}
+                    f:name: {}
                   k:{"name":"NODE_ENV"}:
                     .: {}
                     f:name: {}
@@ -56,6 +68,7 @@ metadata:
                   k:{"name":"PORT"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                 f:imagePullPolicy: {}
                 f:name: {}
                 f:ports:
@@ -74,7 +87,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl-create
     operation: Update
-    time: "2021-01-14T05:57:38Z"
+    time: "2021-03-15T07:09:02Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -89,7 +102,7 @@ metadata:
                 f:image: {}
     manager: kubectl-set
     operation: Update
-    time: "2021-01-14T06:17:00Z"
+    time: "2021-03-16T05:10:38Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -99,11 +112,13 @@ metadata:
             f:containers:
               k:{"name":"customer-integration"}:
                 f:env:
-                  k:{"name":"PORT"}:
+                  k:{"name":"APM_SERVER_URL"}:
+                    f:value: {}
+                  k:{"name":"MONGODB_URI"}:
                     f:value: {}
     manager: kubectl-edit
     operation: Update
-    time: "2021-02-12T14:45:19Z"
+    time: "2021-03-17T10:38:17Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -136,11 +151,12 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-02-12T14:45:24Z"
+    time: "2021-03-25T13:34:03Z"
   name: customer-integration
   namespace: default
-  resourceVersion: "5747989"
-  uid: 35899bd4-3504-44a8-be24-4ab452c8481f
+  resourceVersion: "2198010"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/customer-integration
+  uid: 0342f410-9eaf-491f-b944-eda108cbb26b
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -166,10 +182,21 @@ spec:
         - name: PORT
           value: "8023"
         - name: MONGODB_URI
-          value: mongodb://10.81.1.72:27017/ms-customer-integration
-        image: 10.81.1.72:5000/customer-integration:13
+          value: mongodb://10.82.3.2:27017/ms-customer-integration
+        - name: APM_SERVER_URL
+          value: http://10.82.3.7:8200
+        - name: ENVIRONMENT
+          value: qa
+        image: 10.82.3.2:5000/customer-integration:23
         imagePullPolicy: IfNotPresent
         name: customer-integration
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
         ports:
         - containerPort: 8003
           protocol: TCP
@@ -184,19 +211,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-01-21T06:47:03Z"
-    lastUpdateTime: "2021-01-21T06:47:03Z"
+  - lastTransitionTime: "2021-03-16T05:10:38Z"
+    lastUpdateTime: "2021-03-17T10:38:19Z"
+    message: ReplicaSet "customer-integration-84b7c598cb" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2021-03-25T13:34:03Z"
+    lastUpdateTime: "2021-03-25T13:34:03Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-01-14T06:17:00Z"
-    lastUpdateTime: "2021-02-12T14:45:24Z"
-    message: ReplicaSet "customer-integration-56ff8997d7" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 10
+  observedGeneration: 4
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1
