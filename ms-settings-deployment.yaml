@@ -1,171 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "5"
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"19","kompose.cmd":"kompose convert","kompose.version":"1.16.0 (0c01309)","kubernetes.io/change-cause":"kubectl set image deployment/ms-settings ms-settings=10.81.1.50:5000/ms-settings:44 --record=true"},"creationTimestamp":"2020-10-19T13:16:48Z","generation":19,"labels":{"io.kompose.service":"ms-settings"},"managedFields":[{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kompose.cmd":{},"f:kompose.version":{},"f:kubectl.kubernetes.io/last-applied-configuration":{},"f:kubernetes.io/change-cause":{}},"f:labels":{".":{},"f:io.kompose.service":{}}},"f:spec":{"f:progressDeadlineSeconds":{},"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{"f:matchLabels":{".":{},"f:name":{}}},"f:strategy":{"f:rollingUpdate":{".":{},"f:maxSurge":{},"f:maxUnavailable":{}},"f:type":{}},"f:template":{"f:metadata":{"f:labels":{".":{},"f:name":{}}},"f:spec":{"f:containers":{"k:{\"name\":\"ms-settings\"}":{".":{},"f:env":{".":{},"k:{\"name\":\"APM_SERVER_URL\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"ENVIRONMENT\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"MONGODB_URI\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"NODE_ENV\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"OpenstackRoutes\"}":{".":{},"f:name":{},"f:value":{}},"k:{\"name\":\"PORT\"}":{".":{},"f:name":{},"f:value":{}}},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:ports":{".":{},"k:{\"containerPort\":8005,\"protocol\":\"TCP\"}":{".":{},"f:containerPort":{},"f:protocol":{}}},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{}}}}},"manager":"kubectl","operation":"Update","time":"2021-03-03T11:31:45Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:deployment.kubernetes.io/revision":{}}},"f:status":{"f:availableReplicas":{},"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{},"f:readyReplicas":{},"f:replicas":{},"f:updatedReplicas":{}}},"manager":"kube-controller-manager","operation":"Update","time":"2021-03-03T11:31:55Z"}],"name":"ms-settings","namespace":"default","resourceVersion":"27902890","selfLink":"/apis/apps/v1/namespaces/default/deployments/ms-settings","uid":"c62edc1a-301d-4cbd-b10c-bec8f4323ef4"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"ms-settings"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"ms-settings"}},"spec":{"containers":[{"env":[{"name":"NODE_ENV","value":"development"},{"name":"PORT","value":"8005"},{"name":"MONGODB_URI","value":"mongodb://10.81.1.50:27017/ms-settings"},{"name":"OpenstackRoutes","value":"http://cloud2.ivlab.io:5000/v3"},{"name":"APM_SERVER_URL","value":"http://10.81.1.96:8200"},{"name":"ENVIRONMENT","value":"qa"}],"image":"10.81.1.50:5000/ms-settings:44","imagePullPolicy":"IfNotPresent","name":"ms-settings","ports":[{"containerPort":8005,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2021-02-18T09:06:50Z","lastUpdateTime":"2021-02-18T09:06:50Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2020-10-19T14:04:22Z","lastUpdateTime":"2021-03-03T11:31:55Z","message":"ReplicaSet \"ms-settings-6798db54f7\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":19,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
-    kubernetes.io/change-cause: kubectl set image deployment/ms-settings ms-settings=10.82.3.2:5000/ms-settings:43
-      --record=true
-  creationTimestamp: "2021-03-15T07:09:04Z"
-  generation: 5
   labels:
     io.kompose.service: ms-settings
-  managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:kompose.cmd: {}
-          f:kompose.version: {}
-          f:kubectl.kubernetes.io/last-applied-configuration: {}
-        f:labels:
-          .: {}
-          f:io.kompose.service: {}
-      f:spec:
-        f:progressDeadlineSeconds: {}
-        f:replicas: {}
-        f:revisionHistoryLimit: {}
-        f:selector:
-          f:matchLabels:
-            .: {}
-            f:name: {}
-        f:strategy:
-          f:rollingUpdate:
-            .: {}
-            f:maxSurge: {}
-            f:maxUnavailable: {}
-          f:type: {}
-        f:template:
-          f:metadata:
-            f:labels:
-              .: {}
-              f:name: {}
-          f:spec:
-            f:containers:
-              k:{"name":"ms-settings"}:
-                .: {}
-                f:env:
-                  .: {}
-                  k:{"name":"APM_SERVER_URL"}:
-                    .: {}
-                    f:name: {}
-                  k:{"name":"ENVIRONMENT"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"MONGODB_URI"}:
-                    .: {}
-                    f:name: {}
-                  k:{"name":"NODE_ENV"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"OpenstackRoutes"}:
-                    .: {}
-                    f:name: {}
-                  k:{"name":"PORT"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:ports:
-                  .: {}
-                  k:{"containerPort":8005,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:protocol: {}
-                f:resources: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-            f:dnsPolicy: {}
-            f:restartPolicy: {}
-            f:schedulerName: {}
-            f:securityContext: {}
-            f:terminationGracePeriodSeconds: {}
-    manager: kubectl-create
-    operation: Update
-    time: "2021-03-15T07:09:04Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          f:kubernetes.io/change-cause: {}
-      f:spec:
-        f:template:
-          f:spec:
-            f:containers:
-              k:{"name":"ms-settings"}:
-                f:image: {}
-    manager: kubectl-set
-    operation: Update
-    time: "2021-03-16T05:22:40Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:spec:
-        f:template:
-          f:spec:
-            f:containers:
-              k:{"name":"ms-settings"}:
-                f:env:
-                  k:{"name":"APM_SERVER_URL"}:
-                    f:value: {}
-                  k:{"name":"MONGODB_URI"}:
-                    f:value: {}
-                  k:{"name":"OpenstackRoutes"}:
-                    f:value: {}
-    manager: kubectl-edit
-    operation: Update
-    time: "2021-03-17T12:49:41Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          f:deployment.kubernetes.io/revision: {}
-      f:status:
-        f:availableReplicas: {}
-        f:conditions:
-          .: {}
-          k:{"type":"Available"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-          k:{"type":"Progressing"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-        f:observedGeneration: {}
-        f:readyReplicas: {}
-        f:replicas: {}
-        f:updatedReplicas: {}
-    manager: kube-controller-manager
-    operation: Update
-    time: "2021-03-25T14:44:35Z"
   name: ms-settings
   namespace: default
-  resourceVersion: "2208975"
-  selfLink: /apis/apps/v1/namespaces/default/deployments/ms-settings
-  uid: 7beb019d-f8bf-4f67-87bb-50eddcc169e1
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       name: ms-settings
@@ -194,7 +35,7 @@ spec:
           value: http://10.82.3.7:8200
         - name: ENVIRONMENT
           value: qa
-        image: 10.82.3.2:5000/ms-settings:43
+        image: 10.82.3.2:5000/ms-settings:46
         imagePullPolicy: IfNotPresent
         name: ms-settings
         resources:
@@ -207,30 +48,3 @@ spec:
         ports:
         - containerPort: 8005
           protocol: TCP
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2021-03-16T05:22:40Z"
-    lastUpdateTime: "2021-03-17T12:49:43Z"
-    message: ReplicaSet "ms-settings-7b6d7d798c" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2021-03-25T14:44:35Z"
-    lastUpdateTime: "2021-03-25T14:44:35Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  observedGeneration: 5
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
