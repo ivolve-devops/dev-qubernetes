@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: ms-provider
+  name: ms-provider
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ms-provider
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: ms-provider
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "8017"  
+        - name: MONGODB_BASE_URL
+          value: mongodb://10.82.3.2:27017/ms-provider
+        - name: EMAILER_BASEURL
+          value: http://10.82.3.2:8014/emailer 
+        - name: AUDIT_TRAIL_SERVER_URL
+          value: http://10.82.3.2:8014/audit/
+        - name: IAM
+          value: http://iam:8003
+        - name: BARBICAN_VESRION
+          value: v1
+        - name: BARBICAN_ENDPOINT
+          value: http://cloud1.ivlab.io:9311
+        - name: ENVIRONMENT
+          value: qa
+        image: 10.82.3.2:5000/ms-provider
+        imagePullPolicy: IfNotPresent
+        name: ms-provider
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+        ports:
+        - containerPort: 8017
+          protocol: TCP
+

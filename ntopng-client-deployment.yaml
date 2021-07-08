@@ -34,9 +34,15 @@ spec:
         - name: NTOPNG_BASE_URL
           value: http://10.131.129.196:3000
         - name: NTOPNG_USERNAME
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              key: ntopuser
+              name: secretenv
         - name: NTOPNG_PASSWORD
-          value: letmein
+          valueFrom:
+            secretKeyRef:
+              key: ntoppass
+              name: secretenv
         - name: NTOP_INTERFACE_ID
           value: "3"
         - name: usageReport_mongoDB_URI
@@ -48,6 +54,15 @@ spec:
         image: 10.82.3.2:5000/ntopng-client:27
         imagePullPolicy: IfNotPresent
         name: ntopng-client
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8669
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

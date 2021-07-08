@@ -38,6 +38,15 @@ spec:
         image: 10.82.3.2:5000/ms-settings:46
         imagePullPolicy: IfNotPresent
         name: ms-settings
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8005
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

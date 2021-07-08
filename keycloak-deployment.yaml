@@ -37,9 +37,15 @@ spec:
         - name: CLIENT_SECRET_KEY_MARKETPLACE
           value: 861bf8e3-63e1-47f7-919a-dd059badf37d
         - name: ADMIN_USERNAME
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              key: keycloakusername
+              name: secretenv
         - name: ADMIN_PASSWORD
-          value: Pa55w0rd
+          valueFrom:
+            secretKeyRef:
+              key: keycloakpassword
+              name: secretenv
         - name: ADMIN_INITIAL_REALM
           value: master
         - name: APM_SERVER_URL
@@ -57,6 +63,15 @@ spec:
         image: 10.82.3.2:5000/keycloak:52
         imagePullPolicy: IfNotPresent
         name: keycloak
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /keycloak/health
+            port: 8030
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           limits:
             cpu: 500m

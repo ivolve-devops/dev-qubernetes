@@ -34,9 +34,15 @@ spec:
         - name: VOLUME_PORT_VERSION
           value: 8776/v3
         - name: USERNAME
-          value: admin-user
+          valueFrom:
+            secretKeyRef:
+              key: usageuser
+              name: secretenv
         - name: PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              key: usagepass
+              name: secretenv
         - name: USER_PROJECT
           value: 5ad86ff5ec9d469ab2910103d6f9edd
         - name: MS_LOGGER_THIS_SERVICE_NAME
@@ -60,6 +66,15 @@ spec:
         image: 10.82.3.2:5000/usage-report:46
         imagePullPolicy: IfNotPresent
         name: usage-report
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8006
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

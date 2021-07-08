@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jboss-keycloak
+  labels:
+    name: jboss-keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: jboss-keycloak
+  template:
+    metadata:
+      name: jboss-keycloak
+      labels:
+        name: jboss-keycloak
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: jboss-keycloak
+        image: jboss/keycloak:4.5.0.Final
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        env:
+          - name: KEYCLOAK_LOGLEVEL
+            value: "DEBUG"
+          - name: KEYCLOAK_USER
+            value: "admin"
+          - name: KEYCLOAK_PASSWORD
+            value: "admin"
+          - name: JAVA_OPTS
+            value: "-Dkeycloak.profile.feature.upload_scripts=enabled"
+          - name: DB_VENDOR
+            value: POSTGRES
+          - name: DB_DATABASE
+            value: keycloak
+          - name: DB_SCHEMA
+            value: public
+          - name: DB_USER
+            value: keycloak
+          - name: DB_PASSWORD
+            value: password
+          - name: DB_ADDR
+            value: 10.81.1.87:5432
+            #  - name: Dkeycloak.profile.feature.upload_scripts
+            # value: enabled
+            #command: ["/bin/sh","-c"]
+            #args: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
+             

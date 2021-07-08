@@ -34,9 +34,15 @@ spec:
         - name: ACTIVE
           value: "true"
         - name: USERNAME
-          value: sysadmin
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: secretenv 
         - name: PASSWORD
-          value: public
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: secretenv
         - name: CLIENT_ADMIN
           value: client_admin
         - name: USERADMIN
@@ -72,6 +78,15 @@ spec:
         image: 10.82.3.2:5000/cloudian:25
         imagePullPolicy: IfNotPresent
         name: cloudian
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8002
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

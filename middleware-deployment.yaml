@@ -94,6 +94,15 @@ spec:
         image: 10.82.3.2:5000/middleware:119
         imagePullPolicy: IfNotPresent
         name: middleware
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8001
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

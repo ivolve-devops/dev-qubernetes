@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: capacity-report
+  name: capacity-report
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: capacity-report
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: capacity-report
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: development
+        - name: PROTOCOL
+          value: http
+        - name: DATABASE_URL
+          value: mongodb://10.82.3.2:27017/ms-capacity-report
+        - name: HOST_URL
+          value: "0.0.0.0"
+        - name: PORT
+          value: "8044"
+        - name: OPENSTACK_HOST
+          value: cloud1.ivlab.io
+        - name: COMPUTE_PORT
+          value: "8774"
+        image: 10.82.3.2:5000/capacity-report:50
+        imagePullPolicy: IfNotPresent
+        name: capacity-report
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+        ports:
+        - containerPort: 8044
+          protocol: TCP

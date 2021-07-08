@@ -34,9 +34,15 @@ spec:
         - name: MONGODB_BASE_URL
           value: mongodb://10.82.3.2:27017/ms-trialAccount
         - name: SENDER_USERNAME
-          value: testingmailivolve@yahoo.com
+          valueFrom:
+            secretKeyRef:
+              key: senderuser
+              name: secretenv
         - name: SENDER_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              key: senderpass
+              name: secretenv
         - name: SMTP_HOST
           value: smtp.mail.yahoo.com
         - name: SCHEDULING_MAIL
@@ -70,6 +76,15 @@ spec:
         image: 10.82.3.2:5000/trial-account:32
         imagePullPolicy: IfNotPresent
         name: trial-account
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8020
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

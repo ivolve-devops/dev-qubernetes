@@ -46,15 +46,27 @@ spec:
         - name: API_SECRET_INFRASTRUCTURE
           value: X5#Y5UVm9`p$Vj^P
         - name: KILLBILL_USER
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              key: killbilluser 
+              name: secretenv        
         - name: KILLBILL_PASS
-          value: password
+          valueFrom:
+            secretKeyRef:
+              key: killbillpass
+              name: secretenv
         - name: OTP_SECRET
           value: Ahm3d!sWeaRingGr33n$h!rt
         - name: ADMIN_USERNAME
-          value: marketplace_admin
+          valueFrom:
+            secretKeyRef:
+              key: killbilladminuser
+              name: secretenv
         - name: ADMIN_PASSWORD
-          value: noidEA%^&981admin
+          valueFrom:
+            secretKeyRef:
+              key: killbilladminpass
+              name: secretenv
         - name: MARKETPLACE_LINK
           value: http://qa-marketplace-fe.ivlab.io/
         - name: STATIC_IV
@@ -84,6 +96,15 @@ spec:
         image: 10.82.3.2:5000/marketplace-be:140
         imagePullPolicy: IfNotPresent
         name: marketplace-be
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 9100
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

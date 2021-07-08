@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: ms-dcm-scheduler
+  name: ms-dcm-scheduler
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ms-dcm-scheduler
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: ms-dcm-scheduler
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "8014"  
+        - name: CREDIT_LIMIT_TIMER
+          value: "*/60 * * * *"
+        - name: CONFIGURATION
+          value: http://10.82.3.6:8016
+        - name: MONGODB_BASE_URL
+          value: mongodb://10.82.3.2:27017/ms-dcm-scheduler
+        - name: EMAILER
+          value: http://10.82.3.2:8009 
+        - name: IAM
+          value: http://iam:8003
+        - name: ADMIN_ROLE_ID
+          value: 85de91676ef043cf978fed6c1c067323
+        - name: MIDDLEWARE
+          value: http://10.82.3.2:8001
+        - name: ENVIRONMENT
+          value: development
+        image: 10.82.3.2:5000/ms-provider
+        imagePullPolicy: IfNotPresent
+        name: ms-dcm-scheduler
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+        ports:
+        - containerPort: 8014
+          protocol: TCP
+

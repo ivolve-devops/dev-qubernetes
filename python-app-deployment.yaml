@@ -68,6 +68,15 @@ spec:
         image: 10.82.3.2:5000/python-app:105
         imagePullPolicy: IfNotPresent
         name: python-app
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /backend_service/health
+            port: 8002
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

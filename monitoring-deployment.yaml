@@ -66,6 +66,15 @@ spec:
         image: 10.82.3.2:5000/monitoring:26
         imagePullPolicy: IfNotPresent
         name: monitoring
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8800
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             memory: "128Mi"

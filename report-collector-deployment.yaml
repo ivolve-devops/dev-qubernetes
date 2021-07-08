@@ -28,9 +28,15 @@ spec:
         - name: PORT
           value: "8099"
         - name: RABBITMQ_USER
-          value: guest
+          valueFrom:
+            secretKeyRef:
+              key: rabbitmquser
+              name: secretenv
         - name: RABBITMQ_PASSWORD
-          value: K8ZYl07KICZQqFIithqQxCMjs
+          valueFrom:
+            secretKeyRef:
+              key: rabbitmqpass
+              name: secretenv
         - name: NOTIFICATION_RECEIVER_IP
           value: usage-report:8006
         - name: EXCHANGE_NAME

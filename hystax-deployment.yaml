@@ -40,11 +40,17 @@ spec:
         - name: ADMIN_ROLE_NAME
           value: client_admin
         - name: HYSTAX_EMAIL
-          value: hasan.shafiq@ivolve.io
+          valueFrom:
+            secretKeyRef:
+              key: hystaxemail
+              name: secretenv
+        - name: HYSTAX_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: hystaxpassword
+              name: secretenv
         - name: MOUNTPOINT_ID
           value: e7d6a71f-f3f3-4f66-83d6-c851359f3a23
-        - name: HYSTAX_PASSWORD
-          value: 35e55f616cf716ae80cae4977c6389e9
         - name: MS_CUSTOMER_INTEGRATION
           value: http://customer-integration:8023
         - name: PRICING
@@ -74,6 +80,15 @@ spec:
         image: 10.82.3.2:5000/hystax:44
         imagePullPolicy: IfNotPresent
         name: hystax
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8015
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           limits:
             cpu: 500m

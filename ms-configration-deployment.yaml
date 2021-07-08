@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: ms-configration
+  name: ms-configration
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ms-configration
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: ms-configration
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: development
+        - name: PORT
+          value: "8016"  
+        - name: MONGODB_BASE_URL
+          value: mongodb://10.82.3.2:27017/ms-customer-contract
+        - name: TRIAL_CREDIT_LIMIT
+          value: "1000" 
+        - name: TRIAL_LEVEL_NAME
+          value: level1
+        - name: PEMANENT_CREDIT_LIMIT
+          value: "2000"
+        - name: PERMANENT_LEVEL_NAME
+          value: level2
+        - name: AVAIL_CREDIT
+          value: "1000"
+        - name: MIDDLEWARE_ROUTE
+          value: http://localhost:8001
+        image: 10.82.3.2:5000/ms-provider
+        imagePullPolicy: IfNotPresent
+        name: ms-configration
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+        ports:
+        - containerPort: 8016
+          protocol: TCP
+

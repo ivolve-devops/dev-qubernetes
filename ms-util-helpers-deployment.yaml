@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: ms-util-helpers
+  name: ms-util-helpers
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ms-util-helpers
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: ms-util-helpers
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "8035"
+        - name: MONGODB_URI
+          value: mongodb://10.82.3.2:27017/ms-util-helpers
+        - name: OpenstackRoutes
+          value: http://cloud1.ivlab.io/:5000/v3
+        - name: SMPP_SEND_ENDPOINT
+          value: https://mshastra.com/sendsms_api_json.aspx
+        - name: SMPP_USER_ID
+          value: "20097735"
+        - name: SMPP_SENDER_ID
+          value: MOBSMS
+        - name: SMPP_LANGUAGE
+          value: English
+        - name: SMPP_PASSWORD 
+          value: 2347ff6200893b93cf12570da74bcd5b
+        - name: EMAIL 
+          value: testemaildcm34@gmail.com
+        - name: PASS
+          value: dcmtestemail
+        - name: ENVIRONMENT_SETUP
+          value: qa
+        - name: TOMAIL
+          value: testingservice9661@gmail.com
+        - name: SMTP_HOST
+          value: smtp.gmail.com
+        - name: SMTP_SERVICE
+          value: gmail
+        - name: SMTP_PORT
+          value: "465"
+        - name: SERVICE_DESK_EMAIL
+          value: irfan.ahmed@ivolve.io
+        - name: APM_SERVER_URL
+          value: http://10.82.3.7:8200
+        - name: ENVIRONMENT
+          value: qa
+        - name: IAM
+          value: http://iam:8003
+        - name: AUDIT_TRAIL_SERVER_URL
+          value: http://10.82.3.2:8014/audit/  
+        image: 10.82.3.2:5000/ms-util-helpers
+        imagePullPolicy: IfNotPresent
+        name: ms-util-helpers
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+        ports:
+        - containerPort: 8014
+          protocol: TCP

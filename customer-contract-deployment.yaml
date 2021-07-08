@@ -34,9 +34,15 @@ spec:
         - name: MS_OPENSTACK
           value: python-app:8002
         - name: OPENSTACK_USERNAME
-          value: qa
+          valueFrom:
+            secretKeyRef:
+              key: openstackusername
+              name: secretenv
         - name: PASSWORD
-          value: letmein2QA!!
+          valueFrom:
+            secretKeyRef:
+              key: openstackpassword
+              name: secretenv
         - name: PROJECT_ID
           value: 0c5d638a6a3a4c87b53be0bd539942e1
         - name: OPENSTACK

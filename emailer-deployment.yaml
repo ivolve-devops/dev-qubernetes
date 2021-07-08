@@ -68,6 +68,15 @@ spec:
         image: 10.82.3.2:5000/emailer:49
         imagePullPolicy: IfNotPresent
         name: emailer
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8009
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           limits:
             cpu: 500m

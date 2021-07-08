@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: capacity-report
+  name: capacity-report
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: capacity-report
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: capacity-report
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: development
+        - name: PROTOCOL
+          value: http
+        - name: DATABASE_URL
+          value: mongodb://10.82.3.2:27017/ms-capacity-report
+        - name: HOST_URL
+          value: "0.0.0.0"
+        - name: PORT
+          value: "8044"
+        - name: OPENSTACK_HOST
+          value: cloud1.ivlab.io
+        - name: COMPUTE_PORT
+          value: "8774"
+        - name: KEY_STONE_PORT
+          value: "5000"
+        - name: KEYSTONE_VERSION
+          value: v3
+        - name: OPENSTACK_HOST_VERSION
+          value: v2.0
+        - name: MS_CUSTOMER_CONTRACT_PORT
+          value: "8012"
+        - name: OPENSTACK_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: openstackusername
+              name: secretenv
+        - name: OPENSTACK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: openstackpassword
+              name: secretenv
+        - name: USER_PROJECT
+          value: 0f39b52bdf854d8185b43622e8dc403a
+        - name: CRON_TIME_DURATION
+          value: "* * * * * *"
+        - name: NETWORK_PORT
+          value: "9696"
+        - name: MS_NTOP_URL
+          value: http://10.32.41.171
+        - name: NTOP_IFID
+          value: "3"
+        - name: NTOP_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: ntopusername
+              name: secretenv
+        - name: NTOP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: ntoppassword
+              name: secretenv
+        - name: MS_NTOP_PORT
+          value: "3000"
+        - name: MS_CLOUDIAN_URL
+          value: http://cloudian
+        - name: MS_CAPACITY_PORT
+          value: "8021"
+        - name: CEPH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: cephusername
+              name: secretenv
+        - name: CEPH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: cephpassword
+              name: secretenv
+        - name: CEPH_URL
+          value: https://10.81.1.97:8443
+        - name: MS_DATABASE_URL
+          value: http://database:8029
+        - name: NETWORK_PORT
+          value: "9696"
+        - name: NETWORK_PORT
+          value: "9696"
+        - name: APM_SERVER_URL
+          value: http://10.82.3.7:8200
+        image: 10.82.3.2:5000/capacity-report:50
+        imagePullPolicy: IfNotPresent
+        name: capacity-report
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+        ports:
+        - containerPort: 8044
+          protocol: TCP

@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: jboss-keycloak
   labels:
-    app: jboss-keycloak
     name: jboss-keycloak
 spec:
   type: NodePort
@@ -13,5 +12,4 @@ spec:
       port: 8080
       nodePort: 30080
   selector:
-    app: jboss-keycloak
     name: jboss-keycloak

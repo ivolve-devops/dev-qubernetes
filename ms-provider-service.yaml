@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ms-provider
+  name: ms-provider
+spec:
+  ports:
+  - name: "8017"
+    port: 8017
+    targetPort: 8017
+  selector:
+    name: ms-provider

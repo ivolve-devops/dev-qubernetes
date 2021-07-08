@@ -34,9 +34,15 @@ spec:
         - name: PORT
           value: "8003"
         - name: ADMIN_USERNAME
-          value: DCM
+          valueFrom:
+            secretKeyRef:
+              key: adminusername
+              name: secretenv
         - name: ADMIN_PASSWORD
-          value: letmein
+          valueFrom:
+            secretKeyRef:
+              key: adminpassword
+              name: secretenv                           
         - name: MS_LOGGER_IP
           value: ms-logger
         - name: MS_LOGGER_PORT
@@ -60,6 +66,15 @@ spec:
         image: 10.82.3.2:5000/iam:50
         imagePullPolicy: IfNotPresent
         name: iam
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8003
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           limits:
             cpu: 500m
